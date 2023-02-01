@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 context = ssl._create_unverified_context()
 url = "https://www.tmz.com/hip-hop/" 
 info=""
-nomefile="ProvaLinkTMZ.txt"
+nomefile_link="ProvaLinkTMZ.txt"
 
 page = urlopen(url,context=context)
 html = page.read().decode("utf-8")
@@ -19,9 +19,17 @@ for link in soup.findAll('a'):
         m=re.search(pattern,string,re.IGNORECASE)
         if m!=None:
             links.add(m.group())
-print(links)
-for string in links:
-    info+=string+"\n"
-fout=open(nomefile,"w",encoding="UTF-8")
+dict={}
+for link in links:
+    url=link
+    page = urlopen(url,context=context)
+    html = page.read().decode("utf-8")
+    soup=BeautifulSoup(html,'html.parser')
+    for title in soup.find_all('h1'):
+        dict[str(title.contents[0])]=link
+for keys in dict:
+    print(keys+"\n"+dict[keys]+"\n")
+
+""" fout=open(nomefile_link,"w",encoding="UTF-8")
 print(info,end='',file=fout)
-fout.close()
+fout.close() """
