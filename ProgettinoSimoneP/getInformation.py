@@ -20,6 +20,7 @@ for link in soup.findAll('a'):
         if m!=None:
             links.add(m.group())
 dict={}
+dict_best={}
 for link in links:
     url=link
     page = urlopen(url,context=context)
@@ -37,4 +38,5 @@ for keys in dict:
         m=re.search(regex,str(title.contents[3]),re.IGNORECASE)
         if m!=None:
             urllib.request.urlretrieve(m.group(), r""+keys+".jpg")
-
+            dict_best[link]=(keys,m.group())
+print(dict_best)
