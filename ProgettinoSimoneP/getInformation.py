@@ -1,7 +1,5 @@
-#Da modificare per via della base di dati
-
-
 import requests
+import defFunctions
 import ssl
 import re
 import urllib.request
@@ -40,6 +38,9 @@ for keys in dict:
     for title in soup.find_all('div',class_='img-wrapper'):
         m=re.search(regex,str(title.contents[3]),re.IGNORECASE)
         if m!=None:
-            urllib.request.urlretrieve(m.group(), r""+keys+".jpg")
+            #urllib.request.urlretrieve(m.group(), r""+keys+".jpg")
             dict_best[link]=(keys,m.group())
-print(dict_best)
+for keys in dict_best:
+    defFunctions.aggiungiTupla(dict_best[keys][0],keys,dict_best[keys][1])
+
+defFunctions.mostraTuple()

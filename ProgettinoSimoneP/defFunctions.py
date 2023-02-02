@@ -10,10 +10,18 @@ def collegamento():
 def aggiungiTupla(Titolo,Link,LinkFoto):
     db=collegamento()
     cursor=db.cursor()
-    sql="INSERT INTO clienti(Titolo,Link,LinkFoto) VALUES (%s,%s,%s)"
+    sql="INSERT IGNORE INTO clienti(Titolo,Link,LinkFoto) VALUES (%s,%s,%s)"
     values=(Titolo,Link,LinkFoto)
     cursor.execute(sql,values)
     db.commit()
+
+def cascade():
+    db=collegamento()
+    cursor=db.cursor()
+    sql="DELETE FROM clienti WHERE true"
+    cursor.execute(sql)
+    db.commit()
+
 def mostraTuple():
     db=collegamento()
     cursor=db.cursor()
@@ -22,3 +30,4 @@ def mostraTuple():
     result=cursor.fetchall()
     for riga in result:
         print(riga)
+
