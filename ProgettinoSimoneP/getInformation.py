@@ -1,3 +1,6 @@
+//Da modificare per via della base di dati
+
+
 import requests
 import ssl
 import re
