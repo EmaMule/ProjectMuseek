@@ -1,4 +1,4 @@
-//Da modificare per via della base di dati
+#Da modificare per via della base di dati
 
 
 import requests
