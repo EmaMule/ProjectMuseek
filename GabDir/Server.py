@@ -1,5 +1,8 @@
 import socket
+import threading
+import time
 import defFunctions
+
 def send_to_client(conn):
     db = defFunctions.collegamento()
     cursor=db.cursor()
@@ -8,13 +11,15 @@ def send_to_client(conn):
     result=cursor.fetchall()
     nibbio = ";"
     for riga in result:
+        time.sleep(2)
         conn.send(riga[0].encode())
         conn.send(nibbio.encode())
         conn.send(riga[1].encode())
         conn.send(nibbio.encode())
         conn.send(riga[2].encode())
         conn.send(nibbio.encode())
-   
+    conn.close()
+  
     
 
 
@@ -23,13 +28,13 @@ host = '127.0.0.1'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((host,port))
-sock.listen()
+sock.listen(5)
+print("socket is listening")
 while(True):
     conn, addr = sock.accept()
-    #while True:
-        #data = conn.recv(1024)
-        #if not data:
-        #    break
-    send_to_client(conn)
+    print(conn)
+    x=threading.Thread(target=send_to_client,args=(conn,))
+    x.start()
+    
         
         
