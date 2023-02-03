@@ -1,3 +1,3 @@
 import defFunctions
-defFunctions.cascade()
+defFunctions.setupTable()
 defFunctions.mostraTuple()

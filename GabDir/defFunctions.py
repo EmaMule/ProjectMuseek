@@ -31,3 +31,26 @@ def mostraTuple():
     for riga in result:
         print(riga)
 
+def setupDB():
+    db=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password"
+    )
+    cursor=db.cursor()
+    sql="CREATE DATABASE progettino;"
+    cursor.execute(sql)
+    db.commit()
+
+def setupTable():
+    setupDB()
+    db=mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="progettino"
+    )
+    cursor=db.cursor()
+    sql="CREATE TABLE clienti(Titolo varchar(255),Link varchar(255) primary key,LinkFoto varchar(255), Data date);"
+    cursor.execute(sql)
+    db.commit()

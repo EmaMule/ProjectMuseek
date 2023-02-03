@@ -11,4 +11,5 @@ while(True):
     if not data:
         break
     print(data.decode())
+    print("\n")
 
