@@ -1,0 +1,2 @@
+import defFunctions
+defFunctions.mostraTuple()
