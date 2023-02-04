@@ -48,4 +48,4 @@ def getInf():
         reg ='([0-9]{4}/[0-9]{2}/[0-9]{2})'
         m=re.search(reg,keys,re.IGNORECASE)
         defFunctions.aggiungiTupla(dict_best[keys][0],keys,dict_best[keys][1],m.group())
-    defFunctions.mostraTuple()
+    #defFunctions.mostraTuple()

@@ -54,3 +54,4 @@ def setupTable():
     sql="CREATE TABLE clienti(Titolo varchar(255),Link varchar(255) primary key,LinkFoto varchar(255), Data date);"
     cursor.execute(sql)
     db.commit()
+
