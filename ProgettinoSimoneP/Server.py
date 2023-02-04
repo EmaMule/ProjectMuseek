@@ -3,38 +3,38 @@ import threading
 import time
 import defFunctions
 import getInformation
-
+#VERSIONE COSTOSA DEL PROGRAMMA PORCODDIO STAMMERDA
 wsem=threading.Semaphore(1)
 y=threading.Semaphore(1)
 readcount=0
 def send_to_client(conn):
     global wsem,y,readcount
-    db = defFunctions.collegamento()
-    cursor=db.cursor()
-    sql="SELECT * FROM clienti"
-    y.acquire()
-    readcount+=1
-    if readcount==1:
-        wsem.acquire()
-    y.release()
-    cursor.execute(sql)
-    result=cursor.fetchall()
-    y.acquire()
-    readcount-=1
-    if readcount==0:
-        wsem.release()
-    y.release()
-    separator = ";"
-    for riga in result:
-        conn.send(riga[0].encode())
-        conn.send(separator.encode())
-        conn.send(riga[1].encode())
-        conn.send(separator.encode())
-        conn.send(riga[2].encode())
-        conn.send(separator.encode())
-        conn.send(str(riga[3]).encode())
-        conn.send(separator.encode())
-    conn.close()
+    while(True):
+        page = 10
+        index= int(str(conn.recv(4).decode()))
+        db = defFunctions.collegamento()
+        cursor=db.cursor()
+        sql="SELECT * FROM clienti ORDER BY Data DESC" 
+        y.acquire()
+        readcount+=1
+        if readcount==1:
+            wsem.acquire()
+        y.release()
+        cursor.execute(sql)
+        result=cursor.fetchall()
+        y.acquire()
+        readcount-=1
+        if readcount==0:
+            wsem.release()
+        y.release()
+        print(index)
+        for riga in result[index*page:(index+1)*page]:
+            string="" 
+            for i in riga:
+                string+=str(i)+";"
+            conn.send(string.encode())
+        conn.send("\n".encode())
+    #conn.close()
 def informationWrapper():
     global wsem
     while(True):
@@ -44,6 +44,7 @@ def informationWrapper():
         wsem.release()
         print("Ho finito di aggiornare")
         time.sleep(3600)
+    
 
 thread_inf=threading.Thread(target=informationWrapper)
 thread_inf.start()

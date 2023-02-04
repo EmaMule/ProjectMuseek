@@ -20,8 +20,8 @@ def getInf():
         string=link.get('href')
         if string!=None and 'tmz' in string:
             m=re.search(pattern,string,re.IGNORECASE)
-            if m!=None:
-                links.add(m.group())
+            if m!=None and not defFunctions.isLinkHere(m.group()):
+                links.add(m.group()) 
     dict={}
     dict_best={}
     for link in links:
@@ -39,13 +39,18 @@ def getInf():
         page.close()
         soup=BeautifulSoup(html,'html.parser')
         regex='https://imagez.tmz.com/image/[\w|-|/]+.jpg'
-        for title in soup.find_all('div',class_='img-wrapper'):
-            m=re.search(regex,str(title.contents[3]),re.IGNORECASE)
-            if m!=None:
-                #urllib.request.urlretrieve(m.group(), r""+keys+".jpg")
-                dict_best[link]=(keys,m.group())
+        findAll=soup.find_all('div',class_='img-wrapper')
+        if (findAll==[]):
+            dict_best[link]=(keys,None)
+        else:
+            for title in findAll:
+                m=re.search(regex,str(title.contents[3]),re.IGNORECASE)
+                if m!=None:
+                    #urllib.request.urlretrieve(m.group(), r""+keys+".jpg")
+                    dict_best[link]=(keys,m.group())
     for keys in dict_best:
         reg ='([0-9]{4}/[0-9]{2}/[0-9]{2})'
         m=re.search(reg,keys,re.IGNORECASE)
+        #print(dict_best[keys][0]+" "+keys,dict_best[keys][1]+" "+m.group())
         defFunctions.aggiungiTupla(dict_best[keys][0],keys,dict_best[keys][1],m.group())
     defFunctions.mostraTuple()

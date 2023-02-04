@@ -1,0 +1,5 @@
+1) dizionario globale per il client per migliorare anche la print
+2) link video regex sennò si ha None?
+3) riscrivere meglio il codice per avere tutto in ordine (mettere funzioni in defFunctions) e togliere le 
+   bestemmie
+3) interfaccia per client
