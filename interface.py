@@ -4,40 +4,38 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
-
-class MyGridLayout(GridLayout):
+from kivy.uix.anchorlayout import AnchorLayout
+import kivy.properties
+import kivy.utils
+from kivy.core.window import Window
+class MyLayout(AnchorLayout):
     def __init__(self, **kwargs):
-        super(MyGridLayout,self).__init__(**kwargs)
+        super(MyLayout,self).__init__(**kwargs)
         #num columns
-        self.cols=2
+        Window.clearcolor = (1,1,1,1)
+        self.cols = 1
+        self.rows = 2
+        alayout = AnchorLayout(anchor_x="right",anchor_y="bottom")
+        self.add_widget(alayout)
         
-        #add widget
-        self.add_widget(Label(text="Name: "))
-        #add input box
-        self.name=TextInput(multiline=False)
-        self.add_widget(self.name)
+        ####TOP
 
-        self.add_widget(Label(text="Name1: "))
-        #add input box
-        self.pizza=TextInput(multiline=False)
-        self.add_widget(self.pizza)
+        Titolo = Label(text="Titolo",color=(0.2,0.2,1,1))
+        alayout.add_widget(Titolo)
 
-        #create a submit button
-        self.submit=Button(text="Submit")
-        #bind the button
-        self.submit.bind(on_press=self.press)
-        self.add_widget(self.submit)
+        RefreshB = Button(text="Refresh",color=(0.2,0.2,1,1), background_color=(0.2,0.5,1,1))
+        alayout.add_widget(RefreshB)
+     
+        alayout.add_widget(Label(text="Profdsif",color=(0.2,0.44,0.99,1)))
+        alayout.add_widget(Label(text="porcopi",color=(1,0.4,0.4,1)))
 
-    def press(self,instance):
-        name=self.name.text
-        pizza=self.pizza.text
-        self.add_widget(Label(text=f'Hello {name}, you like {pizza}'))
+        
        
 
 
 class MyApp(App):
     def build(self):
-        return MyGridLayout()
+        return MyLayout()
 
 if __name__=='__main__':
     MyApp().run()
