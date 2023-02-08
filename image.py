@@ -8,50 +8,65 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import AsyncImage
-import webbrowser  
-class MyGridLayout(GridLayout):
-    def __init__(self, **kwargs):
-        super(MyGridLayout,self).__init__(**kwargs)
-        #num columns
-        self.cols=1
-        top_grid=GridLayout()
-        top_grid.cols=2
-        top_grid.rows=1
-        top_grid.add_widget(Label(text="Titolo"))
-        self.add_widget(top_grid)
-        #add widget
-        ''' self.add_widget(Label(text="Name: "))
-        #add input box
-        self.name=TextInput(multiline=True)
-        self.add_widget(self.name)
-
-        self.add_widget(Label(text="Name1: "))
-        #add input box
-        self.pizza=TextInput(multiline=False)
-        self.add_widget(self.pizza)
-
-        #create a submit button
-        self.submit=Button(text="Submit",size_hint_y=None,height=50)
-        #bind the button
-        self.submit.bind(on_press=self.press)
-        self.add_widget(self.submit)
-
-    def press(self,instance):
-        name=self.name.text
-        pizza=self.pizza.text
-        self.add_widget(Label(text=f'Hello {name}, you like {pizza}'))'''
+import webbrowser
+import datetime
 
 class ImageButton(ButtonBehavior,AsyncImage):
-    def __init__(self, **kwargs):
+    def __init__(self,link, **kwargs):
         super(ImageButton, self).__init__(**kwargs)
+        self.link_touse=link
+        self.size=(500,500)
     def on_press(self):
-        webbrowser.open("https://www.tmz.com/2023/02/04/lil-pump-25k-teeth-veneers-dentist-miami-rapper-5-star-smiles/", new=0, autoraise=True) 
+        webbrowser.open(self.link_touse, new=0, autoraise=True)
+class MyButton(Button):
+    def __init__(self,text, link,**kwargs):
+        super(MyButton, self).__init__(**kwargs)
+        self.text=text
+        self.height=10
+        self.link_touse=link
+    def on_press(self):
+        webbrowser.open(self.link_touse, new=0, autoraise=True)
+class Title(GridLayout):
+        def __init__(self,text, link,**kwargs):
+            super(Title, self).__init__(**kwargs)
+            self.text=text
+            self.link_touse=link
+            self.cols=1
+            self.add_widget(MyButton(text=self.text,link=self.link_touse))
+class SiteData(GridLayout):
+    def __init__(self,data,sito,link, **kwargs):
+       super(SiteData, self).__init__(**kwargs)
+       self.data=str(data)
+       self.sito=sito
+       self.link=link
+       self.cols=2
+       self.add_widget(MyButton(text=self.data,link=self.link))
+       self.add_widget(MyButton(text=self.sito,link=self.link))
+       
+class News(BoxLayout):
+    def __init__(self,link,image,data,title,sito, **kwargs):
+        super(News,self).__init__(**kwargs)
+        self.orientation='vertical'
+        self.image=image
+        self.link=link
+        self.title=title
+        self.data=data
+        self.sito=sito
+        self.cols=1
+        image=ImageButton(source=image,link=self.link)
+        image.size=(500,500) #non funziona porcodio
+        self.add_widget(image)
+        self.add_widget(Title(text=self.title,link=self.link))
+        self.add_widget(SiteData(data=self.data,sito=self.sito,link=self.link))
 
-class MyLayout(BoxLayout):
+class MyLayout(GridLayout):
     def __init__(self, **kwargs):
-        super(MyLayout,self).__init__(**kwargs) 
-        icon="https://imagez.tmz.com/image/ca/4by3/2023/02/02/ca12af3a3f0d4088b5f0e51460d0ac94_md.jpg"
-        self.add_widget(ImageButton(source=icon))
+        super(MyLayout,self).__init__(**kwargs)
+        self.cols=1
+        self.add_widget(News(image="https://imagez.tmz.com/image/eb/4by3/2023/02/03/ebf5e037b83f42ecada0bf25a5bde8a5_md.jpg",
+                            title="Beyoncé Fans Use GoFundMe to Raise Money for 'Renaissance' Tour Tickets",
+                            sito="TMZ",data=datetime.date(2023, 2, 4),
+                            link="https://www.tmz.com/2023/02/04/beyonce-renaissance-tour-gofundme-tickets-sale-raise-funds-beyhive/")) 
 
 class MyApp(App):
     def build(self):
