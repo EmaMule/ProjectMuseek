@@ -15,6 +15,7 @@ header{
     background: grey;
     top: 0px;
     position: sticky;
+    opacity: 0.9;
 }
 header::after{
     content: "";
@@ -40,6 +41,7 @@ nav a{
 }
 nav a:hover{
     color: #000;
+    text-decoration: none;
 }
 nav a::before{
     content: "";
@@ -65,7 +67,6 @@ nav a:hover::before{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Times New Roman', Times, serif;
-    text-decoration: none;
     font-size: 16px;
     margin: 12px 15px;
     cursor: pointer;
@@ -81,16 +82,16 @@ nav a:hover::before{
     right: 9px;
     background: white;
     border: 3px solid #f1f1f1;
-    padding: 0;
-    z-index: 3;
+    margin: 0;
+    z-index: 1;
 }
 .form-container{
-    background-color: whitesmoke; /* cambiare colore*/
+    background-color: rgb(219, 218, 218); /* cambiare colore*/
     opacity: 0.99;
     max-width: 260px;
     position: relative;
     top: 0px;
-    margin: 50px auto 50px;
+    padding: 10px 25px 10px 25px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.2), 0 5px px 0 rgba(0,0,0,0.24);
 }
@@ -122,7 +123,7 @@ nav a:hover::before{
     text-transform: uppercase;
     outline: 0;
     border-radius: 10px;
-    background: #1adbe5;
+    background: #1adbe5; /*cambiare colore*/
     width: 100%;
     border: 0;
     padding: 15px;
