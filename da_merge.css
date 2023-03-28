@@ -1,0 +1,28 @@
+.top_news_top_g {
+  background-color: rgb(15, 99, 99);
+  height: 85%;
+  text-align: center;
+  background-image: linear-gradient(rgb(15, 99, 99), rgb(56, 159, 185));
+  color: rgb(47, 164, 232);
+  font-size: 10vh;
+}
+
+.most_recent_top_g {
+  background-color: rgb(98, 25, 194);
+  height: 85%;
+  text-align: center;
+  background-image: linear-gradient(rgb(138, 9, 9), rgb(199, 109, 109));
+  color: rgb(204, 3, 3);
+}
+
+.card_paragraph_top_g {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text_in_card_top_g {
+  font-size: larger;
+}
