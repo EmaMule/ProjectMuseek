@@ -1,0 +1,83 @@
+.container{
+    width: 100%;
+    margin: 0 auto;
+}
+.my_navbar{
+    float: inline-start;
+}
+.logo{
+    padding-left: 20px;
+    padding-top:7px;
+    float: left;
+}
+header{
+    width: 100%;
+    background: grey;
+}
+header::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+.elementi_navbar{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav li{
+    display: inline-block;
+    margin-left: 50px;
+    padding-top: 15px;
+    position: relative;
+}
+nav a{
+    color: whitesmoke;
+    opacity: 0.6;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+nav a:hover{
+    color: #000;
+}
+nav a::before{
+    content: "";
+    display: block;
+    height: 5px;
+    width: 100%;
+    background-color: #444;
+    position: absolute;
+    top: 40px;
+    width: 0%;
+    transition: all ease-in-out 170ms;
+}
+nav a:hover::before{
+    width: 100%;
+}
+.bottone_login{
+    transition:linear;
+    transition-duration: 200ms; 
+    border: 3;
+    float: right;
+    border-color:#444 ;
+    background-color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+    text-decoration: none;
+    font-size: 16px;
+    size: 30px 30px;
+    margin: 15px 15px;
+    cursor: pointer;
+}
+.bottone_login:hover{
+    background-color: rgb(92, 35, 35);
+    color: white;
+}
+.form_popup{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
