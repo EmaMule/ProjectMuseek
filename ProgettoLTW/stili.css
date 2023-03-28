@@ -7,12 +7,14 @@
 }
 .logo{
     padding-left: 20px;
-    padding-top:7px;
+    padding-top:5px;
     float: left;
 }
 header{
     width: 100%;
     background: grey;
+    top: 0px;
+    position: sticky;
 }
 header::after{
     content: "";
@@ -32,7 +34,7 @@ nav li{
 }
 nav a{
     color: whitesmoke;
-    opacity: 0.6;
+    opacity: 0.9;
     text-decoration: none;
     text-transform: uppercase;
 }
@@ -45,7 +47,7 @@ nav a::before{
     height: 5px;
     width: 100%;
     background-color: #444;
-    position: absolute;
+    position: absolute; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
     top: 40px;
     width: 0%;
     transition: all ease-in-out 170ms;
@@ -59,14 +61,13 @@ nav a:hover::before{
     border: 3;
     float: right;
     border-color:#444 ;
-    background-color: white;
+    background-color: whitesmoke;
     text-align: center;
     text-transform: uppercase;
     font-family: 'Times New Roman', Times, serif;
     text-decoration: none;
     font-size: 16px;
-    size: 30px 30px;
-    margin: 15px 15px;
+    margin: 12px 15px;
     cursor: pointer;
 }
 .bottone_login:hover{
@@ -75,9 +76,67 @@ nav a:hover::before{
 }
 .form_popup{
     display: none;
-    position: fixed;
-    bottom: 0;
-    right: 15px;
+    position: fixed; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
+    top: 65px;
+    right: 9px;
+    background: white;
     border: 3px solid #f1f1f1;
-    z-index: 9;
+    padding: 0;
+    z-index: 3;
+}
+.form-container{
+    background-color: whitesmoke; /* cambiare colore*/
+    opacity: 0.99;
+    max-width: 260px;
+    position: relative;
+    top: 0px;
+    margin: 50px auto 50px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.2), 0 5px px 0 rgba(0,0,0,0.24);
+}
+.form-container p{
+    font-size: 15px;
+    padding:1px;
+    text-align: center;
+}
+.form-container input{
+    outline: 0;
+    border-radius: 10px;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form-container input:hover{
+    background-color: cyan; /* cambiare colore*/
+    transition: all 1s ease 0s ;
+}
+.form-container:focus{
+    background-color: aliceblue; /* cambiare colore*/
+    transition: all 1s ease 0s ;
+}
+.form-container button{
+    text-transform: uppercase;
+    outline: 0;
+    border-radius: 10px;
+    background: #1adbe5;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+.form-container .messaggio{
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.form-container .messaggio a{
+    color: #06c5cf;
+    text-decoration: none;
+
 }
