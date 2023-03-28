@@ -4,22 +4,27 @@
 }
 .my_navbar{
     float: inline-start;
+    padding: 0;
 }
 .logo{
     padding-left: 20px;
     padding-top:5px;
     float: left;
+    position: relative;
 }
 header{
     width: 100%;
     background: grey;
     top: 0px;
     position: sticky;
+    min-width: 100px;
     opacity: 0.9;
 }
 header::after{
     content: "";
     display: table;
+    padding-left: 0;
+    padding-right: 0;
     clear: both;
 }
 .elementi_navbar{
@@ -60,6 +65,7 @@ nav a:hover::before{
 .bottone_login{
     transition:linear;
     transition-duration: 200ms; 
+    position: relative;
     border: 3;
     float: right;
     border-color:#444 ;
@@ -72,28 +78,35 @@ nav a:hover::before{
     cursor: pointer;
 }
 .bottone_login:hover{
-    background-color: rgb(92, 35, 35);
+    background-color: rgb(100, 96, 96);
     color: white;
 }
 .form_popup{
-    display: none;
     position: fixed; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
     top: 65px;
     right: 9px;
+    overflow: hidden;
     background: white;
-    border: 3px solid #f1f1f1;
+    /*border: 3px solid #f1f1f1;*/
     margin: 0;
     z-index: 1;
 }
 .form-container{
     background-color: rgb(219, 218, 218); /* cambiare colore*/
-    opacity: 0.99;
+    opacity: 0;
     max-width: 260px;
+    overflow: hidden;
     position: relative;
-    top: 0px;
+    display: block;
+    top: -30px;
     padding: 10px 25px 10px 25px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.2), 0 5px px 0 rgba(0,0,0,0.24);
+    transition: opacity 0.5s, top 0.5s;
+}
+.form-container.visible{
+    opacity: 1;
+    top:0px;
 }
 .form-container p{
     font-size: 15px;
@@ -141,3 +154,17 @@ nav a:hover::before{
     text-decoration: none;
 
 }
+@media only screen and (min-width: 768px) {
+    .container {
+      width: 960px;
+      margin: 0 auto;
+    }
+    /* Altri stili per schermi larghi */
+}
+@media only screen and (max-width: 767px) {
+    .container {
+      width: 100%;
+      margin: 0;
+    }
+    /* Altri stili per schermi piccoli */
+  }

@@ -1,12 +1,10 @@
-function see_or_unsee_form(){
-    var value=document.getElementById("bottone_login").value;
-    var form=document.getElementById("my_form");
-    if(value=="LOGIN"){
-    form.style.display="block";
-    document.getElementById("bottone_login").value="CLOSE";
-    }
-    else{
+function see_or_unsee_form() {
+    var popup = document.getElementById("my_form");
+    if (popup.classList.contains("visible")) {
         document.getElementById("bottone_login").value="LOGIN";
-        form.style.display="none";
+        popup.classList.remove("visible");
+    } else {
+        document.getElementById("bottone_login").value="CLOSE";
+        popup.classList.add("visible");
     }
-}
+  }
