@@ -1,38 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stili.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stili.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="da_merge.css" />
+    <script src="da_merge.js"></script>
+    <script src="metodi.js"></script>
     <title>Music News</title>
-</head>
-<body>
-  <header>
-    <div class="container">
-      <img src="Microsoft_logo.jpg" alt="logo" width="40" height="40" class="logo">
-      <nav class="my_navbar">
-      <ul class="elementi_navbar">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#">ABOUT US</a></li>
-        <li><a href="#">LATEST NEWS</a></li>
-        <li><a href="#">FOLLOW US</a></li>
-      </ul>
-      </nav>
-      <input type="button" class=" bottone bottone_login" id="bottone_login" value="LOGIN" onclick="visibilitaForm();">
-    </div>
-  </header>
-  <div class="form_popup" id="my_form">
-    <form class="form-container">
-      <h1>Login</h1>
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
+    
+   
+    
+  </head>
+  <body class="bg-dark">
+    <header>
+      <div class="container">
+        <a href="#"
+          ><img
+            src="Microsoft_logo.jpg"
+            alt="logo"
+            width="60"
+            height="50"
+            class="logo"
+        /></a>
+        <nav class="my_navbar">
+          <ul class="elementi_navbar">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">ABOUT US</a></li>
+            <li><a href="#">LATEST NEWS</a></li>
+            <li><a href="#">FOLLOW US</a></li>
+          </ul>
+        </nav>
+        <input
+          type="button"
+          class="bottone bottone_login"
+          id="bottone_login"
+          value="LOGIN"
+          onclick="return see_or_unsee_form();"
+        />
+      </div>
+    </header>
+    <div class="form_popup">
+      <form class="form-container" id="my_form">
+        <h1>Login</h1>
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required />
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-  
-      <button type="submit" class="btn">Login</button>
-    </form>
-  </div>
-</body>
+        <label for="psw"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="psw"
+          required
+        />
+
+        <button type="submit" class="btn">Login</button>
+        <p class="messaggio">
+          Not registered? <a href="#">Create an account</a>
+        </p>
+        <p class="messaggio">Password Forgotten? <a href="#">Click here</a></p>
+      </form>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <h1 class="h1 top_news_top_g">MOST RECENT</h1>
+        </div>
+        <div class="col-4">
+          <h1 class="h1 most_recent_top_g">TOP NEWS</h1>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <!--Inizio carosello-->
+          
+          <div  class="slider-wrapper_top_g" >
+            <!--Aggiunta divisori - - - -->
+            <button class="slide-arrow_top_g slide-arrow-prev_top_g" id="prev-arrow" onclick="return slide_left_top_g();">&#8250</button>
+            <button class="slide-arrow_top_g slide-arrow-next_top_g" id="next-arrow" onclick="return slide_right_top_g();">&#8249</button>
+           
+            <!--Rotazione effettiva elementi-->
+            <div class="slides-container_top_g" id="slides_container">
+              <div class="slide_top_g">
+                <div class="container">
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <!--CARD-->
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          TMZ TITLE
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          TMZ TITLE
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          TMZ TITLE
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          TMZ TITLE
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slide_top_g">
+                <div class="container">
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <!--CARD-->
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEMS 2
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEMS 2
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEMS 2
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATYAAACjCAMAAAA3vsLfAAAAflBMVEUAAADPEQDXEgDYEgDREQDKEQFhCAA0BQO7DwAxBQLUEQBnCQNgCAPCEAHJEQGGCwJEBgGtDgE6BQG/EAFUBwGQDAJrCQJYBwGbDQK1DwEuBAF6CgGACwGLDAJTBwFJBgESAQFxCQEpBAGpDgE/BgIlAwGYDQIaAgEhAwEnBAKIBwZUAAAFdUlEQVR4nO2bjW7qOBCFiW1a6hIoUAoUaC9tl+2+/wtuQn6wx5PgaDcJjs53dVUBScQcHdvjGTMaAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAdspBCyBKR/JPFayGy1+X/9KXI/5SfCBm/9x1E5+xF9J/R331H0TmH/0E2teg7iu6J0wFH0FpVCKS1e7VUL30H0QOPlOXP9DARnHB6tn5+WTo39B3BHTGNXN30oe9vdf88OrKJt76/UwgcNZnXdn1/oyB4Imushtm8GJMxuuz7C4XB2J7dxJPx2XL6tvmrt29211TLdpyJNIHbwX8MVbJ9Rnk2rMTU60Ef8/V6fXwoX28rkukr5xbC6Qo6t+WyLa9bCCV+bj/mM06smSCifE3ZyPzuatnkR3thtU2FbBMjXLW6+ZRpud9Qcn555+32Nlg8txlYu/CDdCMaxfduZn9ykz04s1+B6zo1bjm0NuFl21pZsIpvPGRnPkRNsjenJm8zdz9yajeyVuEH6UQ1idD2ZiS/mGv+kO1IpGYtRNMZvGzNQiQi6wfuogWxW8gzW9UgpQNK19ltQzdorGxklHqsM/eMn2y1diNm42V7INrmC0eoeA3S2iocNRsvG9E29EqLp2w12QI1GyvbpyRm+2wroG7wG6Q1dnuVzqWMbGRBCL6f4ytbFFU8wDEbJ9uSDGQRuNn8ZdNH9v5XdxPFyGanz8HPbE3cptn7d0wTx5Htl+S6IuxldOS9JKRqrJnbGbMxsq2J2W5t1u4ff7dF+m/3dsZsjGzkgqB3oxn+bou0W1fkzObKdiBmC7n0kdPAbZF2Gguc2VzZyL5Kz7sIrF0aybYlN7Nmc2SjFUvVTWSt0kS2SJAzbm7OxskWE7NxS0toNJjbEp/YZ9ymfOGbyOYUSP7pLLj2aOQ20n2OWbNR2cj8pwZxvLCR2+y95HNFl8WW7YVu4gfRd62VTSWZg508mPl9tkCml9RVd78HtonPqBukapbsuE9V3ZiTKDRa2hmGJdsXMZt47TjAdqiTTV8WzpPd/Ntbd2bH4aaWtJZsZ5Lqhl0LL6mRTeVp2sq6pMi69qkeeSnjt1I22rAKu/FypWZu07mx7MpskfNejimI/DyC9QxTNnLsMOwun0GdbIUz7NJsdnRjbpiNeNaUjZwB0fvRMKgZpKVstDb7mB6tiQyz2eIbsu1pU7nb4NrDRzZ6tkGt5xcXXYu0VbLRfRVfIQ4Qn0HqVGd19ro0W5VsNCHmKnZh4uU2Wp7NXXfNXCtko6ccaAUlXLzcxu+2jF4nvyR80H7VcH5KU+E2RWQ7uHYzt0m822hzdBCb+Ay/QepcZ5uNl+2Fmm1AP3bzle1Eyx1Wr5MdpNRswTdHDTznNre4ZjXWrU9y2X6o2fxOnIeBt2zkpJXtHc5t1GwD6Fdd8ZaNZBP2RMW47YdUjNRwso+R/9yWpBOmDqTayCwJpDxJnxY4/rJZTQGyKjKy0SVkQEnbqJFsxrCjpW1XthNN9GizMGxIx1xkh+P5YXUddzQFs8S/LJnOT64G0R4tscMrWgW8bE+Fg5w+ilUAlmkjlDktOKRf+JLSbX48g5etLCA5+b651c+kXzmyRSLeno9zm2BPVW6diEeVsuUFJHdz+WU8JGvS0IX0cp/SFBnshmtXhqzGxZGiy4zHpPXHy/rIdIj3pWl19pOrZ+ckNEvAhcuzVCq1gtiVVcSDVJHm2iU7rZTkGgJ7kXySIIqO3lbq7J1aJPuLmTBYbmMtZwszgsMsWvxy127HMT+1v59XcRzvrpI+Hs7fu0k9qwEcdQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMkX8Bv0I8Y6bqMTkAAAAASUVORK5CYII="
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEMS 2
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slide_top_g">
+                <div class="container">
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <!--CARD-->
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEM3
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEM 3
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row no-gutters">
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEM3
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card bg-dark text-white card_top_g">
+                        <img
+                          class="card-img"
+                          src="data:image/png;base64,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"
+                          alt="Card image"
+                        />
+                        <div class="card-img-overlay card_paragraph_top_g">
+                          <a
+                            class="h5"
+                            href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F"/>
+                          ITEM3
+                        </a>
+                          <p class="card-text font-italic text_in_card_top_g" >
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur, quibusdam at, animi minima suscipit optio exercitationem error?
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--INIZIANO LE IMMAGINI-->
+
+        </div>
+      </div>
+    </div>
+    
+  </body>
 </html>
