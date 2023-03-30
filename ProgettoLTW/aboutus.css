@@ -19,9 +19,7 @@ layout più flessibile e adattabile a schermi di diverse dimensioni.*/
   box-sizing: border-box;
   font-family: sans-serif;
 }
-body {
-  background-color: white;
-}
+
 /*border: 1px solid orange; imposta un bordo solido arancione di 1 pixel attorno all'elemento.
 display: flex; imposta il valore della proprietà CSS display sull'elemento a flex. Ciò significa che 
 l'elemento verrà visualizzato come un contenitore flessibile che può contenere uno o più elementi figli. 
@@ -40,13 +38,13 @@ sull'altezza complessive dell'elemento.*/
 .column {
   width: 100%; /* Se si mette un'altra dimensione, le colonne possono mettersi una accanto all'altra con dimensioni pagina
                   più piccole */
-  padding: 2em 0; /* Distanza tra le colonne quando sono uno una riga */
+  padding: 2em 1em; /* Distanza tra le colonne quando sono uno una riga */
 }
 h1 {
   text-align: center;
   width: 100%;
-  font-size: 10em;
-  color: black;
+  font-size: 5em;
+  color: white;
 }
 /*Il codice fornito rappresenta due regole CSS: la prima, .box, definisce lo stile di base per un elemento 
 che ha l'attributo class impostato su "box". La seconda, .box .img-container, 
@@ -62,8 +60,12 @@ cursor: pointer; imposta il cursore del mouse sull'elemento come un puntatore, i
 .box {
   box-shadow: 0 0 0.2em rgba(25, 0, 58, 0.15);
   padding: 3.5em 1em;
-  color: black;
+  color: white;
   cursor: pointer;
+  /* le righe seguenti fanno si che i vertici siano circolari */
+  border-radius: 25px;
+  background-position: left top;
+  background-repeat: repeat;
 }
 /*margin: 0 auto 2em auto; imposta il margine superiore e inferiore dell'elemento su 2 "em" e 
 il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente all'interno del suo contenitore*/
@@ -101,7 +103,7 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
   transform: scale(1.1);
 }
 .box:hover {
-  background: linear-gradient(black, #8567f7); /* Transizione tra i colori */
+  background: linear-gradient(grey, #8567f7); /* Transizione tra i colori */
   color: blue;
 }
 .box:hover .img-container {
@@ -111,6 +113,9 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
 }
 
 @media screen and (min-width: 768px) {
+  .about-section {
+    height: 100vw;
+  }
   section {
     padding: 2em 6em;
   }
@@ -139,9 +144,45 @@ than one-third of the container), and a padding of 0 (top and bottom) and 1em (l
     padding: 1 1em;
   }
 }
-h3.hidden {
-  display: none;
+.container {
+  max-width: 100%;
 }
+.about-section {
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: center;
+  height: 25vw;
+  width: 100%;
+  background-color: #474e5d;
+  color: white;
+}
+.us {
+  background-color: #474e5d;
+}
+.about-section p {
+  text-align: center;
+}
+h3.hidden {
+  opacity: 0; /* Completely invisible. */
+  transform: translateY(150px);
+  transition: 2s; /* A 1 second transition. */
+  color: white;
+}
+
 .column:hover h3.hidden {
-  display: block;
+  opacity: 1; /* Completely visible. */
+  transform: translateY(0px);
+  color: white;
+}
+.reveal {
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: all 2s ease;
+}
+
+.reveal.active {
+  transform: translateY(0px);
+  opacity: 1;
 }
