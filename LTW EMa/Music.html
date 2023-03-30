@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./stili.css">
+    <script src="https://kit.fontawesome.com/d20fe07ffa.js" crossorigin="anonymous"></script>
+    <title>Progetto LTW</title>
+</head>
+<body>
+    <div class="container p-0">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand my_brand" href="#">Music.com</a>
+            <button class="navbar-toggler ml-auto" id="bottone_toggle" value="NOT clicked" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav mr-auto mb-2 mb-lg-0 ml-3 justify-content-center" id="lista_navbar">
+                <li class="nav-item my_nav-item">
+                  <a class="nav-link" href="#">Latest News</a>
+                </li>
+                <li class="nav-item my_nav-item">
+                  <a class="nav-link" href="#">For You</a>
+                </li>
+                <li class="nav-item my_nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item my_nav-item">
+                  <a class="nav-link" href="#">About Us</a>
+              </li>
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+              </ul>
+            </div>
+            <a class="my_navbar_login" style="color: black; opacity: 100%;" href="#" onclick="see_or_unsee_form();" value="Login"><i class="fa-solid fa-user-plus icona_utente" aria-hidden="false" aria-valuetext="Accedi Ora"></i></a>
+          </nav>
+          <div class="form_popup">
+            <form class="form-container" id="my_form">
+              <h1>Login</h1>
+              <label for="email"><b>Email</b></label>
+              <input type="text" placeholder="Enter Email" name="email" required>
+        
+              <label for="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" name="psw" required>
+          
+              <button type="submit" class="btn">Login</button>
+              <p class="messaggio"> Not registered? <a href="#">Create an account</a></p>
+              <p class="messaggio"> Password Forgotten? <a href="#">Click here</a></p>
+            </form>
+          </div>
+    </div>
+    <div class="container">
+        <p class="my_para">
+ lacus scelerisque volutpat nec non tortor. Nullam tortor sem, maximus a dapibus ut, luctus sit amet nunc. Maecenas auctor congue dolor, eget commodo lectus gravida ac. Phasellus aliquam eros nulla, ac auctor felis faucibus ut. Proin et est quam. Nullam sit amet erat sit amet lorem pretium cursus vitae eget quam. Sed magna metus, porta at augue a, finibus venenatis lorem.
+
+Donec feugiat eget quam sed ultrices. Phasellus lacinia felis libero, nec tincidunt diam mattis sit amet. Cras et turpis dui. Sed non neque bibendum, ultrices mi quis, condimentum risus. Vivamus ac malesuada eros, eu fringilla ex. Praesent id ex nisi. Mauris efficitur lobortis nunc et molestie.
+
+Pellentesque sit amet neque volutpat, interdum sem eu, auctor lorem. In scelerisque ultrices tortor, a mattis ex fermentum vestibulum. Quisque vulputate interdum lectus, quis commodo lectus laoreet lacinia. Aenean vitae dictum quam, in volutpat justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi imperdiet ligula in posuere tempus. Donec a vulputate elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque neque ipsum, scelerisque in sapien vel, consequat volutpat dolor. Praesent commodo ultricies ante, vitae viverra elit hendrerit sed. Donec vitae justo nulla.
+
+Vestibulum facilisis ipsum sit amet ex rutrum, non suscipit eros tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed eu massa quis urna pellentesque luctus. Nulla facilisi. Etiam lobortis malesuada quam, a iaculis odio tempus vel. Sed sed ornare lacus, a consectetur libero. Duis ipsum turpis, iaculis gravida enim eu, varius dictum ligula. 
+lacus scelerisque volutpat nec non tortor. Nullam tortor sem, maximus a dapibus ut, luctus sit amet nunc. Maecenas auctor congue dolor, eget commodo lectus gravida ac. Phasellus aliquam eros nulla, ac auctor felis faucibus ut. Proin et est quam. Nullam sit amet erat sit amet lorem pretium cursus vitae eget quam. Sed magna metus, porta at augue a, finibus venenatis lorem. Donec feugiat eget quam sed ultrices. Phasellus lacinia felis libero, nec tincidunt diam mattis sit amet. Cras et turpis dui. Sed non neque bibendum, ultrices mi quis, condimentum risus. Vivamus ac malesuada eros, eu fringilla ex. Praesent id ex nisi. Mauris efficitur lobortis nunc et molestie. Pellentesque sit amet neque volutpat, interdum sem eu, auctor lorem. In scelerisque ultrices tortor, a mattis ex fermentum vestibulum. Quisque vulputate interdum lectus, quis commodo lectus laoreet lacinia. Aenean vitae dictum quam, in volutpat justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi imperdiet ligula in posuere tempus. Donec a vulputate elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque neque ipsum, scelerisque in sapien vel, consequat volutpat dolor. Praesent commodo ultricies ante, vitae viverra elit hendrerit sed. Donec vitae justo nulla. Vestibulum facilisis ipsum sit amet ex rutrum, non suscipit eros tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed eu massa quis urna pellentesque luctus. Nulla facilisi. Etiam lobortis malesuada quam, a iaculis odio tempus vel. Sed sed ornare lacus, a consectetur libero. Duis ipsum turpis, iaculis gravida enim eu, varius dictum ligula. 
+lacus scelerisque volutpat nec non tortor. Nullam tortor sem, maximus a dapibus ut, luctus sit amet nunc. Maecenas auctor congue dolor, eget commodo lectus gravida ac. Phasellus aliquam eros nulla, ac auctor felis faucibus ut. Proin et est quam. Nullam sit amet erat sit amet lorem pretium cursus vitae eget quam. Sed magna metus, porta at augue a, finibus venenatis lorem. Donec feugiat eget quam sed ultrices. Phasellus lacinia felis libero, nec tincidunt diam mattis sit amet. Cras et turpis dui. Sed non neque bibendum, ultrices mi quis, condimentum risus. Vivamus ac malesuada eros, eu fringilla ex. Praesent id ex nisi. Mauris efficitur lobortis nunc et molestie. Pellentesque sit amet neque volutpat, interdum sem eu, auctor lorem. In scelerisque ultrices tortor, a mattis ex fermentum vestibulum. Quisque vulputate interdum lectus, quis commodo lectus laoreet lacinia. Aenean vitae dictum quam, in volutpat justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi imperdiet ligula in posuere tempus. Donec a vulputate elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque neque ipsum, scelerisque in sapien vel, consequat volutpat dolor. Praesent commodo ultricies ante, vitae viverra elit hendrerit sed. Donec vitae justo nulla. Vestibulum facilisis ipsum sit amet ex rutrum, non suscipit eros tincidunt. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed eu massa quis urna pellentesque luctus. Nulla facilisi. Etiam lobortis malesuada quam, a iaculis odio tempus vel. Sed sed ornare lacus, a consectetur libero. Duis ipsum turpis, iaculis gravida enim eu, varius dictum ligula. 
+        </p>
+    </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="./metodi.js"></script>
+</body>
+</html>
