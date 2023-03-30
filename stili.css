@@ -1,0 +1,125 @@
+.my_nav-item .nav-link {
+    position: relative;
+    margin-left: 30px;
+    color: rgb(200, 200, 200) !important;
+  }
+  
+.my_nav-item .nav-link::before {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    visibility: hidden;
+    transition: all 0.35s ease-in-out;
+}
+@media screen and (max-width: 920px) {
+    .my_nav-item .nav-link:hover::before {
+      visibility: visible;
+      width: 15%;
+    }
+  }
+  
+  @media screen and (min-width: 921px) {
+    .my_nav-item .nav-link:hover::before {
+      visibility: visible;
+      width: 100%;
+    }
+}
+.my_brand{
+    font-family: sans-serif;
+
+}
+.navbar{
+    opacity: 0.9;
+}
+.icona_utente{
+    border-radius: 100%;
+    right: 10px;
+    margin-left: 20px;
+    background-color: whitesmoke;
+    padding: 5px;
+    position: relative;
+    top: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.my_para{
+    position: relative;
+    margin-top: 50px;
+}
+.form_popup{
+    position: fixed; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
+    top: 65px;
+    right: 9px;
+    overflow: hidden;
+    /*border: 3px solid #f1f1f1;*/
+    margin: 0;
+    z-index: 1;
+}
+.form-container{/* cambiare colore*/
+    opacity: 0;
+    max-width: 260px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    top: -80px;
+    padding: 10px 25px 10px 25px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.2), 0 5px px 0 rgba(0,0,0,0.24);
+    transition: opacity 0.5s, top 0.5s;
+    backdrop-filter: blur(10px);
+    border-radius: 10%;
+}
+.form-container.visible{
+    opacity: 1;
+    top:0px;
+}
+.form-container p{
+    font-size: 15px;
+    padding:1px;
+    text-align: center;
+}
+.form-container input{
+    outline: 0;
+    border-radius: 10px;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form-container input:hover{
+    background-color: cyan; /* cambiare colore*/
+    transition: all 1s ease 0s ;
+}
+.form-container:focus{
+    background-color: aliceblue; /* cambiare colore*/
+    transition: all 1s ease 0s ;
+}
+.form-container button{
+    text-transform: uppercase;
+    outline: 0;
+    border-radius: 10px;
+    background: #1adbe5; /*cambiare colore*/
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+}
+.form-container .messaggio{
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.form-container .messaggio a{
+    color: #06c5cf;
+    text-decoration: none;
+}
