@@ -102,16 +102,23 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
 .box a:hover {
   transform: scale(1.1);
 }
-.fa-linkedin{
+.fa-linkedin {
   color: rgb(4, 4, 121);
 }
-.fa-github{
+.fa-github {
   color: solid black;
 }
-.box:hover { /* Transizione tra i colori */
+.fa-book {
+  color: red;
+}
+.fa-globe {
+  color: blue;
+}
+.box:hover {
+  /* Transizione tra i colori */
   color: rgb(85, 84, 84);
   background-color: #b9b9b9;
-  color:  white;/* tono di grigio scuro */
+  color: white; /* tono di grigio scuro */
 }
 .box:hover .img-container {
   transform: scale(
@@ -160,13 +167,13 @@ than one-third of the container), and a padding of 0 (top and bottom) and 1em (l
   padding: 20px;
   border: 1px solid black;
   text-align: center;
-  height: 10%;
+  height: 600px;
   width: 100%;
-  background-color:rgb(85, 84, 84);;
+  background-color: rgb(85, 84, 84);
   color: white;
 }
 .us {
-  background-color:rgb(85, 84, 84);
+  background-color: rgb(85, 84, 84);
   background-size: cover;
 }
 .about-section p {
@@ -177,22 +184,22 @@ h3.hidden {
   border-style: solid;
   border-color: white;
   border-width: 2px;
-  transform: translateY(100px); 
+  transform: translateY(100px);
   background-color: rgba(52, 73, 227, 0.7);
   margin: auto;
-  transition: 0.5s ease-in-out; 
+  transition: 0.5s ease-in-out;
   color: white;
   font-family: sans-serif;
   font-size: 19px;
-  padding: 10px; 
+  padding: 10px;
   border-radius: 10px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-  }
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
 
 .column:hover h3.hidden {
   opacity: 1; /* Completely visible. */
   transform: translateY(0px);
-  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   color: solid black;
 }
 .reveal {
@@ -209,25 +216,30 @@ and slow down again at the end.*/
   transform: translateY(0px);
   opacity: 1;
 }
-div.img-container .nostre_img{
+div.img-container .nostre_img {
   object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-.container_mega_img{
+.container_mega_img {
   min-height: 400px;
 }
 @media only screen and (max-width: 768px) {
   .container_mega_img {
     min-height: 200px;
-     /* Altezza dell'immagine per schermi più piccoli */
+    /* Altezza dell'immagine per schermi più piccoli */
   }
-  .container_mega_img img{
+  .container_mega_img img {
     height: 200px;
     object-fit: cover;
   }
-  .about-section{
+  .about-section {
     height: 10%;
   }
+}
+.limit {
+  text-align: center;
+  width: 550vm;
+  word-wrap: break-word;
 }
