@@ -60,12 +60,14 @@ cursor: pointer; imposta il cursore del mouse sull'elemento come un puntatore, i
 .box {
   box-shadow: 0 0 0.2em rgba(25, 0, 58, 0.15);
   padding: 3.5em 1em;
-  color: white;
+  color: #1d1d1f;
   cursor: pointer;
   /* le righe seguenti fanno si che i vertici siano circolari */
   border-radius: 25px;
   background-position: left top;
   background-repeat: repeat;
+  background-color: #f5f5f5;
+  transition: all 350ms ease-in-out;
 }
 /*margin: 0 auto 2em auto; imposta il margine superiore e inferiore dell'elemento su 2 "em" e 
 il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente all'interno del suo contenitore*/
@@ -79,7 +81,6 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
 }
 .box img {
   width: 100%;
-  border-radius: 25%;
 }
 .box h3 {
   font-weight: 500;
@@ -96,15 +97,21 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
   justify-content: space-between; /* Spazio tra le icone e con width ho settato quanto */
 }
 .box a {
-  color: red;
   font-size: 3em; /* Setto dimensione link e quindi delle icone */
 }
 .box a:hover {
   transform: scale(1.1);
 }
-.box:hover {
-  background: linear-gradient(grey, #8567f7); /* Transizione tra i colori */
-  color: blue;
+.fa-linkedin{
+  color: rgb(4, 4, 121);
+}
+.fa-github{
+  color: solid black;
+}
+.box:hover { /* Transizione tra i colori */
+  color: rgb(85, 84, 84);
+  background-color: #b9b9b9;
+  color:  white;/* tono di grigio scuro */
 }
 .box:hover .img-container {
   transform: scale(
@@ -146,40 +153,53 @@ than one-third of the container), and a padding of 0 (top and bottom) and 1em (l
 }
 .container {
   max-width: 100%;
+  overflow: hidden;
 }
 .about-section {
   box-sizing: border-box;
   padding: 20px;
   border: 1px solid black;
   text-align: center;
-  height: 25vw;
+  height: 10%;
   width: 100%;
-  background-color: #474e5d;
+  background-color:rgb(85, 84, 84);;
   color: white;
 }
 .us {
-  background-color: #474e5d;
+  background-color:rgb(85, 84, 84);
+  background-size: cover;
 }
 .about-section p {
   text-align: center;
 }
 h3.hidden {
-  opacity: 0; /* Completely invisible. */
-  transform: translateY(150px);
-  transition: 2s; /* A 1 second transition. */
+  opacity: 0;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  transform: translateY(100px); 
+  background-color: rgba(52, 73, 227, 0.7);
+  margin: auto;
+  transition: 0.5s ease-in-out; 
   color: white;
-}
+  font-family: sans-serif;
+  font-size: 19px;
+  padding: 10px; 
+  border-radius: 10px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
 
 .column:hover h3.hidden {
   opacity: 1; /* Completely visible. */
   transform: translateY(0px);
-  color: white;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  color: solid black;
 }
 .reveal {
   position: relative;
   transform: translateY(150px);
   opacity: 0;
-  transition: all 2s ease;
+  transition: all 1s ease;
 }
 /* "transition: all 2s ease;" specifies that any CSS property changes on the element will have a duration of 2 seconds 
 and will have an "ease" timing function, which means the animation will start slowly, accelerate through the middle, 
@@ -188,4 +208,26 @@ and slow down again at the end.*/
 .reveal.active {
   transform: translateY(0px);
   opacity: 1;
+}
+div.img-container .nostre_img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.container_mega_img{
+  min-height: 400px;
+}
+@media only screen and (max-width: 768px) {
+  .container_mega_img {
+    min-height: 200px;
+     /* Altezza dell'immagine per schermi più piccoli */
+  }
+  .container_mega_img img{
+    height: 200px;
+    object-fit: cover;
+  }
+  .about-section{
+    height: 10%;
+  }
 }
