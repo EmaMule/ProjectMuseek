@@ -1,7 +1,11 @@
 var userIcon = document.querySelector('.my_navbar_login');
 var navbarMenu = document.getElementById("bottone_toggle");
 var listaNavbar=document.getElementById("lista_navbar");
+var bottoneRicerca=document.getElementById("bottone_ricerca");
+var searchInput=document.getElementById("Search_input");
+var popup = document.getElementById("my_form");
 // aggiungi un gestore di eventi di clic al pulsante della navbar
+searchInput.style.width = '0';
 navbarMenu.addEventListener('click', () => {
   // controlla se il menu della navbar è aperto
   if (navbarMenu.value=="NOT clicked") {
@@ -26,11 +30,24 @@ navbarMenu.addEventListener('click', () => {
     }
 });
 
+// Aggiungiamo un event listener al bottone di ricerca
+bottoneRicerca.addEventListener('mouseenter', () => {
+  // All'avvicinamento del mouse, ingrandiamo l'input
+  searchInput.style.width = '200px';
+  searchInput.style.caretColor="auto";
+});
+
+// Aggiungiamo un event listener all'input
+searchInput.addEventListener('mouseleave', () => {
+  // Quando il mouse esce dall'input, riduciamo la sua larghezza
+  searchInput.style.width = '0';
+  searchInput.style.caretColor="transparent";
+});
 function see_or_unsee_form() {
-    var popup = document.getElementById("my_form");
+  console.log("ci sono qua");
     if (popup.classList.contains("visible")) {
         popup.classList.remove("visible");
     } else {
         popup.classList.add("visible");
     }
-  }
+}

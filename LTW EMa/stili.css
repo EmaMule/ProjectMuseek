@@ -38,6 +38,8 @@
 .icona_utente{
     border-radius: 100%;
     right: 10px;
+    width: 30px;
+    height: 30px;
     margin-left: 20px;
     background-color: whitesmoke;
     padding: 5px;
@@ -45,7 +47,9 @@
     top: 0px;
     vertical-align: middle;
     display: inline-block;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.icona_utente:hover {
+    box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.3);
 }
 .my_para{
     position: relative;
@@ -95,8 +99,9 @@
     font-size: 14px;
 }
 .form-container input:hover{
-    background-color: cyan; /* cambiare colore*/
-    transition: all 1s ease 0s ;
+    background-color: #d6d5d5; /* cambiare colore*/
+    color: white;
+    transition: all 0.3s ease 0s ;
 }
 .form-container:focus{
     background-color: aliceblue; /* cambiare colore*/
@@ -114,6 +119,9 @@
     font-size: 14px;
     cursor: pointer;
 }
+.form-container button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* sostituire il valore di "rgba" con il colore dell'ombra desiderato */
+}
 .form-container .messaggio{
     margin: 15px 0 0;
     color: #b3b3b3;
@@ -123,3 +131,43 @@
     color: #06c5cf;
     text-decoration: none;
 }
+.search-bar{
+    max-width: 300px;
+    background: #fff;
+    display: flex;
+    align-items:center;
+    border-radius: 60px;
+
+}
+.search-bar input{
+    background: transparent;
+    font-size: 7px;
+    flex: 1;
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    transition: width 0.5s;
+    caret-color: transparent;
+    padding-left: 15px;
+    color: #b3b3b3;
+}
+.search-bar button i{
+    width: 25px;
+}
+.search-bar button{
+    border: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: whitesmoke;
+    cursor: pointer;
+}
+.search-bar input::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 16px;
+    border-left: 1px solid black !important;
+    top: 5px;
+    right: 40px;
+  }
