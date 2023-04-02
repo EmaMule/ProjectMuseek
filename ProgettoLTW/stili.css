@@ -1,108 +1,82 @@
-.container{
-    width: 100%;
-    margin: 0 auto;
-}
-.my_navbar{
-    float: inline-start;
-    padding: 0;
-}
-.logo{
-    padding-left: 20px;
-    padding-top:5px;
-    float: left;
+.my_nav-item .nav-link {
     position: relative;
-}
-header{
-    width: 100%;
-    background: grey;
-    top: 0px;
-    position: sticky;
-    min-width: 100px;
-    opacity: 0.9;
-}
-header::after{
+    margin-left: 30px;
+    color: rgb(200, 200, 200) !important;
+  }
+  
+.my_nav-item .nav-link::before {
     content: "";
-    display: table;
-    padding-left: 0;
-    padding-right: 0;
-    clear: both;
-}
-.elementi_navbar{
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-nav li{
-    display: inline-block;
-    margin-left: 50px;
-    padding-top: 15px;
-    position: relative;
-}
-nav a{
-    color: whitesmoke;
-    opacity: 0.9;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-nav a:hover{
-    color: #000;
-    text-decoration: none;
-}
-nav a::before{
-    content: "";
-    display: block;
-    height: 5px;
-    width: 100%;
-    background-color: #444;
-    position: absolute; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
-    top: 40px;
+    position: absolute;
     width: 0%;
-    transition: all ease-in-out 170ms;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    visibility: hidden;
+    transition: all 0.35s ease-in-out;
 }
-nav a:hover::before{
-    width: 100%;
+@media screen and (max-width: 920px) {
+    .my_nav-item .nav-link:hover::before {
+      visibility: visible;
+      width: 15%;
+    }
+  }
+  
+  @media screen and (min-width: 921px) {
+    .my_nav-item .nav-link:hover::before {
+      visibility: visible;
+      width: 100%;
+    }
 }
-.bottone_login{
-    transition:linear;
-    transition-duration: 200ms; 
-    position: relative;
-    border: 3;
-    float: right;
-    border-color:#444 ;
+.my_brand{
+    font-family: sans-serif;
+
+}
+.navbar{
+    opacity: 0.9;
+}
+.icona_utente{
+    border-radius: 100%;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
     background-color: whitesmoke;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 16px;
-    margin: 12px 15px;
-    cursor: pointer;
+    padding: 5px;
+    position: relative;
+    top: 0px;
+    vertical-align: middle;
+    display: inline-block;
 }
-.bottone_login:hover{
-    background-color: rgb(100, 96, 96);
-    color: white;
+.icona_utente:hover {
+    box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.3);
+}
+.my_para{
+    position: relative;
+    margin-top: 50px;
 }
 .form_popup{
     position: fixed; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
     top: 65px;
     right: 9px;
     overflow: hidden;
-    background: white;
     /*border: 3px solid #f1f1f1;*/
     margin: 0;
     z-index: 1;
 }
-.form-container{
-    background-color: rgb(219, 218, 218); /* cambiare colore*/
+.form-container{/* cambiare colore*/
     opacity: 0;
     max-width: 260px;
     overflow: hidden;
     position: relative;
     display: block;
-    top: -30px;
+    top: -80px;
     padding: 10px 25px 10px 25px;
     text-align: center;
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.2), 0 5px px 0 rgba(0,0,0,0.24);
     transition: opacity 0.5s, top 0.5s;
+    backdrop-filter: blur(10px);
+    border-radius: 10%;
 }
 .form-container.visible{
     opacity: 1;
@@ -125,8 +99,9 @@ nav a:hover::before{
     font-size: 14px;
 }
 .form-container input:hover{
-    background-color: cyan; /* cambiare colore*/
-    transition: all 1s ease 0s ;
+    background-color: #d6d5d5; /* cambiare colore*/
+    color: white;
+    transition: all 0.3s ease 0s ;
 }
 .form-container:focus{
     background-color: aliceblue; /* cambiare colore*/
@@ -144,6 +119,9 @@ nav a:hover::before{
     font-size: 14px;
     cursor: pointer;
 }
+.form-container button:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* sostituire il valore di "rgba" con il colore dell'ombra desiderato */
+}
 .form-container .messaggio{
     margin: 15px 0 0;
     color: #b3b3b3;
@@ -152,19 +130,44 @@ nav a:hover::before{
 .form-container .messaggio a{
     color: #06c5cf;
     text-decoration: none;
+}
+.search-bar{
+    max-width: 300px;
+    background: #fff;
+    display: flex;
+    align-items:center;
+    border-radius: 60px;
 
 }
-@media only screen and (min-width: 768px) {
-    .container {
-      width: 960px;
-      margin: 0 auto;
-    }
-    /* Altri stili per schermi larghi */
+.search-bar input{
+    background: transparent;
+    font-size: 7px;
+    flex: 1;
+    border: 0;
+    outline: none;
+    font-size: 20px;
+    transition: width 0.5s;
+    caret-color: transparent;
+    padding-left: 15px;
+    color: #b3b3b3;
 }
-@media only screen and (max-width: 767px) {
-    .container {
-      width: 100%;
-      margin: 0;
-    }
-    /* Altri stili per schermi piccoli */
+.search-bar button i{
+    width: 25px;
+}
+.search-bar button{
+    border: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: whitesmoke;
+    cursor: pointer;
+}
+.search-bar input::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 16px;
+    border-left: 1px solid black !important;
+    top: 5px;
+    right: 40px;
   }
