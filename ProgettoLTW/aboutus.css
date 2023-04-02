@@ -167,7 +167,7 @@ than one-third of the container), and a padding of 0 (top and bottom) and 1em (l
   padding: 20px;
   border: 1px solid black;
   text-align: center;
-  height: 600px;
+  height: 100%;
   width: 100%;
   background-color: rgb(85, 84, 84);
   color: white;
