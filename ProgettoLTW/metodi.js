@@ -4,6 +4,7 @@ var listaNavbar = document.getElementById("lista_navbar");
 var bottoneRicerca = document.getElementById("bottone_ricerca");
 var searchInput = document.getElementById("Search_input");
 var popup = document.getElementById("my_form");
+var searchBar = document.getElementById("search_bar");
 // aggiungi un gestore di eventi di clic al pulsante della navbar
 searchInput.style.width = "0";
 navbarMenu.addEventListener("click", () => {
@@ -11,6 +12,7 @@ navbarMenu.addEventListener("click", () => {
   if (navbarMenu.value == "NOT clicked") {
     // se sì, rimuovi l'icona dell'utente dalla navbar
     userIcon.style.display = "none";
+    searchBar.style.display = "none";
     navbarMenu.value = "clicked";
     // crea un nuovo elemento della navbar per il login
     const loginItem = document.createElement("li");
@@ -27,6 +29,7 @@ navbarMenu.addEventListener("click", () => {
     }
     setTimeout(() => {
       userIcon.style.display = "block";
+      searchBar.style.display = "initial";
     }, 400);
   }
 });
@@ -44,11 +47,44 @@ searchInput.addEventListener("mouseleave", () => {
   searchInput.style.width = "0";
   searchInput.style.caretColor = "transparent";
 });
+popup.addEventListener("mouseleave", () => {
+  popup.classList.remove("visible");
+  disableFormInputs();
+  disableFormAnchors();
+});
 function see_or_unsee_form() {
-  console.log("ci sono qua");
   if (popup.classList.contains("visible")) {
-    popup.classList.remove("visible");
+    return false;
   } else {
     popup.classList.add("visible");
+    enableFormInputs();
+    enableFormAnchors();
   }
+}
+function enableFormInputs() {
+  const formInputs = popup.querySelectorAll("input, textarea, button");
+  formInputs.forEach((input) => {
+    input.disabled = false;
+  });
+}
+function disableFormInputs() {
+  const formInputs = popup.querySelectorAll("input, textarea, button");
+  formInputs.forEach((input) => {
+    input.disabled = true;
+  });
+}
+function disableFormAnchors() {
+  const formAnchors = popup.querySelectorAll("a");
+  formAnchors.forEach((anchor) => {
+    anchor.style.cursor = "default";
+  });
+}
+
+function enableFormAnchors() {
+  const formAnchors = popup.querySelectorAll("a");
+  formAnchors.forEach((anchor) => {
+    if (anchor.style.cursor == "default") {
+      anchor.style.cursor = "pointer";
+    }
+  });
 }

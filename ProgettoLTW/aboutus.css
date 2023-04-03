@@ -110,11 +110,11 @@ il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente
 }
 .fa-music {
   color: red;
-  font-size: 60px;
+  font-size: 35px;
 }
 .fa-headphones {
   color: blue;
-  font-size: 60px;
+  font-size: 35px;
 }
 .box:hover {
   /* Transizione tra i colori */
@@ -183,12 +183,9 @@ than one-third of the container), and a padding of 0 (top and bottom) and 1em (l
 }
 h3.hidden {
   opacity: 0;
-  border-style: solid;
-  border-color: white;
-  border-width: 2px;
   transform: translateY(100px);
-  background-color: rgba(52, 73, 227, 0.7);
-  margin: auto;
+  background-image: linear-gradient(to right, #ff5733, #433b3b);
+  margin-top: 10px;
   transition: 0.5s ease-in-out;
   color: white;
   font-family: sans-serif;
@@ -254,23 +251,6 @@ div.img-container .nostre_img {
   transition: transform 1s ease;
 }
 
-.my_nav-item .nav-link {
-  position: relative;
-  margin-left: 30px;
-  color: rgb(200, 200, 200) !important;
-}
-
-.my_nav-item .nav-link::before {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  visibility: hidden;
-  transition: all 0.35s ease-in-out;
-}
 @media screen and (max-width: 920px) {
   .my_nav-item .nav-link:hover::before {
     visibility: visible;
