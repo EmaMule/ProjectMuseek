@@ -1,5 +1,5 @@
 //x il carosello
-let cube = document.querySelector(".carousel_top_g");
+/*let cube = document.querySelector(".carousel_top_g");
 let btnN = document.getElementById("next");
 let btnP = document.getElementById("prev");
 let pos = 0;
@@ -12,7 +12,7 @@ btnN.addEventListener("click", () => {
 btnP.addEventListener("click", () => {
   pos += 90;
   cube.style.transform = "rotateY(" + pos + "deg)";
-});
+});*/
 
 function setupAnimation_top_g() {
   const options = {

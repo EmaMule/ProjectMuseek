@@ -1,41 +1,32 @@
 .top_news_top_g {
-  margin-top: 50px;
   background-color: rgb(45, 45, 45);
   text-align: center;
-  background-size: contain;
   color: rgb(255, 255, 255);
-  font-size: 4rem;
-  height: 65%;
-  width: 130%;
+  font-size: 0.5rem;
+  height: 100%;
+  width: 40%;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
   border-top-style: ridge;
+  border-top-right-radius: 3rem;
+  border-top-left-radius: 3rem;
   border-left-style: ridge;
   border-right-style: ridge;
   font-weight: 600;
   position: relative;
-  left: 0rem;
 }
 
 .most_recent_top_g {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   position: relative;
-  right: 2rem;
-  background-color: rgb(45, 45, 45);
-  background-size: contain;
-  width: 110%;
-
-  margin-left: -5vw;
-  background-size: contain;
+  width: 100%;
+  left: 0;
   text-align: center;
   font-weight: 600;
-  color: rgb(255, 255, 255);
-  font-size: 5rem;
-  border-bottom-left-radius: 3rem;
-  border-bottom-right-radius: 3rem;
-  border-top-style: ridge;
-  border-left-style: ridge;
-  border-right-style: ridge;
+  font-family: sans-serif;
+  color: solid black;
+  font-size: 1.5rem;
   box-shadow: 0 0 0 0 rgb(45, 45, 45);
 }
 
@@ -90,12 +81,12 @@
 }
 
 .carousel_top_g {
-  position: relative;
+  position: absolute;
   width: 20em;
 
   height: 15em;
   margin: 0 auto;
-  left: -7em;
+
   transform-style: preserve-3d;
   transition: 1s;
 }
@@ -148,7 +139,7 @@
 .next,
 .prev {
   position: absolute;
-  top: 110%;
+  top: 370px;
   right: 0;
   width: 1em;
   border-radius: 3px;
@@ -160,11 +151,11 @@
 }
 
 .next {
-  left: -3em;
+  left: 0em;
 }
 
 .prev {
-  left: 16em;
+  left: 17.5em;
 }
 
 .middle_section_top_g {
@@ -207,10 +198,11 @@
   height: 15em;
   width: 25em;
   position: relative;
-  border-radius: 1em;
+  border-radius: 1.5em;
   margin-bottom: 10px;
   bottom: -100px;
   opacity: 0;
+  padding: 10px;
   transition: all 1s ease-out;
 }
 
@@ -218,32 +210,46 @@
   opacity: 1;
   bottom: 0px;
 }
-.my_header_title{
+.my_header_title {
   background-size: cover;
   width: 100%;
   margin-top: 60px;
   text-align: center;
   background-color: black;
 }
-.my_title{
-  color: white; 
-  font-size: 65px; 
-  font-family: sans-serif; 
-  letter-spacing: 2px; 
+.my_title {
+  color: white;
+  font-size: 65px;
+  font-family: sans-serif;
+  letter-spacing: 2px;
   text-shadow: 2px 2px 5px #000000;
 }
-@media screen and (max-width: 1200px){
-  .footer_img_top_g{
+@media screen and (max-width: 720px) {
+  .footer_img_top_g {
     margin-top: 10px;
   }
-  .scene_top_g{
-   margin-left: 200px;
+
+  .scene_top_g {
+    margin-left: -150px;
   }
-  .next {
-    left: -8em;
+}
+
+@media screen and (max-width: 800px) {
+  #cube_container {
+    transition: 0.5s ease-out;
+    margin-top: 400px;
+    position: absolute;
   }
-  .prev {
-    left: 11em;
-  }  
-  
+}
+
+@media screen and (max-width: 540px) {
+  #cube_container {
+    transition: 0.5s ease-out;
+    margin-top: 600px;
+    position: absolute;
+  }
+}
+hr {
+  width: 95%;
+  margin: 0 auto;
 }
