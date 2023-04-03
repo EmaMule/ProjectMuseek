@@ -1,4 +1,0 @@
-2) link video regex sennò si ha None?
-3) riscrivere meglio il codice per avere tutto in ordine (mettere funzioni in defFunctions) e togliere le 
-   bestemmie
-4) interfaccia per client
