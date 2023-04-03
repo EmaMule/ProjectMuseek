@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Us</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="./bootstrap-4.0.0/dist/css/bootstrap.min.css"
+    />
 
     <!-- Questa mi è servita per le icone-->
     <link
@@ -18,6 +21,99 @@
     <script type="application/javascript" src="js/bootstrap.min.js "></script>
   </head>
   <body class="bg-dark">
+    <header>
+      <div class="container p-0">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+          <a class="navbar-brand my_brand" href="#">Music.com</a>
+          <button
+            class="navbar-toggler ml-auto"
+            id="bottone_toggle"
+            value="NOT clicked"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul
+              class="navbar-nav mr-auto mb-2 mb-lg-0 ml-3 justify-content-center"
+              id="lista_navbar"
+            >
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">Latest News</a>
+              </li>
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">For You</a>
+              </li>
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+              <li class="nav-item my_nav-item">
+                <a class="nav-link" href="#">About Us</a>
+              </li>
+            </ul>
+          </div>
+          <form action="" class="search-bar">
+            <input
+              type="text"
+              class="search-bar-text"
+              placeholder="Search anything"
+              id="Search_input"
+            />
+            <button type="submit" id="bottone_ricerca">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+          <a
+            class="my_navbar_login"
+            style="color: black; opacity: 100%"
+            href="#"
+            onclick="see_or_unsee_form();"
+            value="Login"
+            ><i
+              class="fa-solid fa-user-plus icona_utente"
+              aria-hidden="false"
+              aria-valuetext="Accedi Ora"
+            ></i
+          ></a>
+        </nav>
+        <div class="form_popup">
+          <form class="form-container" id="my_form">
+            <h1>Login</h1>
+            <label for="email"><b>Email</b></label>
+            <input
+              type="text"
+              placeholder="Enter Email"
+              name="email"
+              required
+            />
+
+            <label for="psw"><b>Password</b></label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              name="psw"
+              required
+            />
+
+            <button type="submit" class="btn">Login</button>
+            <p class="messaggio">
+              Not registered? <a href="#">Create an account</a>
+            </p>
+            <p class="messaggio">
+              Password Forgotten? <a href="#">Click here</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </header>
     <div class="container">
       <div class="container_mega_img">
         <img
@@ -68,16 +164,16 @@
               <hr />
               <div class="limit text-center">
                 <p>
-                  Introducing our website, a news platform created by three
-                  young music enthusiasts. Our website was born out of a need
-                  for a music news outlet that focuses on the music itself,
-                  rather than just the personalities behind it. In a world where
-                  music news has become more about the people than the music, we
-                  strive to be different. Our team is passionate about bringing
-                  you the latest updates and stories from the world of music,
-                  with a focus on the artists and their work. We believe that
-                  music is more than just entertainment; it's an art form that
-                  deserves to be celebrated and appreciated.
+                  We are thrilled to present our website, a news platform
+                  founded by three young music enthusiasts. Our website was born
+                  out of a need for a music news outlet that focuses on the
+                  music itself, rather than just the personalities behind it. In
+                  a world where music news has become more about the people than
+                  the music, we strive to be different. Our team is passionate
+                  about bringing you the latest updates and stories from the
+                  world of music, with a focus on the artists and their work. We
+                  believe that music is more than just entertainment; it's an
+                  art form that deserves to be celebrated and appreciated.
                 </p>
               </div>
             </div>
@@ -162,5 +258,21 @@
         </div>
       </div>
     </section>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./metodi.js"></script>
   </body>
 </html>
