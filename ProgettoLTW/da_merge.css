@@ -1,36 +1,38 @@
 .top_news_top_g {
-  margin-top: 50px;
   background-color: rgb(45, 45, 45);
   text-align: center;
-  background-size: contain;
   color: rgb(255, 255, 255);
-  font-size: 4rem;
-  height: 65%;
-  width: 130%;
+  font-size: 0.5rem;
+  height: 100%;
+  width: 40%;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
   border-top-style: ridge;
+  border-top-right-radius: 3rem;
+  border-top-left-radius: 3rem;
   border-left-style: ridge;
   border-right-style: ridge;
   font-weight: 600;
   position: relative;
-  left: 0rem;
 }
 
 .most_recent_top_g {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   position: relative;
-  right: 2rem;
+  right: 0rem;
   background-color: rgb(45, 45, 45);
   background-size: contain;
-  width: 110%;
+  width: 100%;
+  border-top-right-radius: 3rem;
+  border-top-left-radius: 3rem;
 
   margin-left: -5vw;
   background-size: contain;
   text-align: center;
   font-weight: 600;
   color: rgb(255, 255, 255);
-  font-size: 5rem;
+  font-size: 3rem;
   border-bottom-left-radius: 3rem;
   border-bottom-right-radius: 3rem;
   border-top-style: ridge;
@@ -83,21 +85,19 @@
 }
 .scene_top_g {
   width: 90%;
-  max-width: 60em;
+  max-width: 30em;
   height: auto;
-  width: 10em;
-  margin: 0 auto;
   padding-bottom: 5em;
   perspective: 80em;
 }
 
 .carousel_top_g {
-  position: relative;
+  position: absolute;
   width: 20em;
 
   height: 15em;
   margin: 0 auto;
-  left: -7em;
+
   transform-style: preserve-3d;
   transition: 1s;
 }
@@ -150,7 +150,7 @@
 .next,
 .prev {
   position: absolute;
-  top: 110%;
+  top: 370px;
   right: 0;
   width: 1em;
   border-radius: 3px;
@@ -162,17 +162,17 @@
 }
 
 .next {
-  left: -7em;
+  left: 0em;
 }
 
 .prev {
-  left: 11.5em;
+  left: 17.5em;
 }
 
 .middle_section_top_g {
   background-color: rgb(91, 32, 32);
   margin-top: 85px;
-  width: 102%;
+  width: 100%;
   background: linear-gradient(173deg, rgb(80, 26, 26), rgb(50, 50, 50));
 }
 
@@ -194,14 +194,15 @@
 
 .middle_section_bg_top_g {
   background-color: rgb(50, 50, 50);
-  width: 102%;
+  width: 100%;
   margin-top: 40px;
 }
 
 .footer_bg_top_g {
   background-color: rgb(50, 50, 50);
-  width: 102%;
-  height: 300px;
+  width: 100%;
+  height: auto;
+  padding-bottom: 50px;
 }
 
 .footer_img_top_g {
@@ -209,6 +210,7 @@
   width: 25em;
   position: relative;
   border-radius: 1em;
+  margin-bottom: 10px;
   bottom: -100px;
   opacity: 0;
   transition: all 1s ease-out;
@@ -217,4 +219,43 @@
 .show_top_g {
   opacity: 1;
   bottom: 0px;
+}
+.my_header_title {
+  background-size: cover;
+  width: 100%;
+  margin-top: 60px;
+  text-align: center;
+  background-color: black;
+}
+.my_title {
+  color: white;
+  font-size: 65px;
+  font-family: sans-serif;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px #000000;
+}
+@media screen and (max-width: 720px) {
+  .footer_img_top_g {
+    margin-top: 10px;
+  }
+
+  .scene_top_g {
+    margin-left: -150px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #cube_container {
+    transition: 0.5s ease-out;
+    margin-top: 400px;
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  #cube_container {
+    transition: 0.5s ease-out;
+    margin-top: 600px;
+    position: absolute;
+  }
 }
