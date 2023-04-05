@@ -73,7 +73,7 @@
           <a
             class="my_navbar_login"
             style="color: black; opacity: 100%"
-            href="#"
+            href="javascript:void(0);"
             onclick="see_or_unsee_form();"
             value="Login"
             ><i
@@ -101,7 +101,6 @@
               name="psw"
               required
             />
-
             <button type="submit" class="btn">Login</button>
             <p class="messaggio">
               Not registered? <a href="#">Create an account</a>
@@ -113,6 +112,7 @@
         </div>
       </div>
     </header>
+
     <section class="forms">
       <div class="signup-box">
         <form action="">
@@ -147,7 +147,7 @@
             <input type="password" class="password" required />
             <label> Confirm Password</label>
           </div>
-          <button type="submit">Register</button>
+          <button class="register-button" type="submit">Register</button>
           <div class="register-link">
             <p>
               You have an account?<a href="#" onclick="mostraLogin();">Login</a>
@@ -172,7 +172,7 @@
             <label><input type="checkbox" />Remember me</label>
             <a href="#">Forgot Password?</a>
           </div>
-          <button type="submit">Login</button>
+          <button class="register-button" type="submit">Login</button>
           <div class="register-link">
             <p>
               Don't have an account?<a href="#" onclick="mostraRegister();"
@@ -183,7 +183,6 @@
         </form>
       </div>
     </section>
-    <script src="login.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -200,5 +199,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="./metodi.js"></script>
+    <script src="login.js"></script>
   </body>
 </html>
