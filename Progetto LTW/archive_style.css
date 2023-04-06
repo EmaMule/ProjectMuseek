@@ -16,7 +16,37 @@
 }
 
 .body_top_g {
-  background-color: rgb(210, 210, 210);
+  background-color: rgb(233, 233, 233);
+  animation: change-color-anim 180s linear infinite;
+}
+
+@keyframes change-color-anim {
+  0%,
+  100% {
+    background-color: rgb(224, 224, 224);
+  }
+  50% {
+    background-color: gold;
+  }
+}
+
+.article_user_wrapper_top_g {
+  font-size: 0.5em;
+  border-bottom: ridge;
+}
+
+.article_user_text_top_g {
+  width: 30%;
+}
+
+.article_little_icon_top_g {
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 20px;
+  box-shadow: 8px, 8px, 16px, 8px;
 }
 
 .article_container_top_g {
