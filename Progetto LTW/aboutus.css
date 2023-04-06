@@ -1,0 +1,266 @@
+/*padding: 0; rimuove il padding predefinito degli elementi HTML.
+margin: 0; rimuove i margini predefiniti degli elementi HTML.
+box-sizing: border-box; imposta il box-sizing degli elementi HTML come border-box, 
+            il che significa che l'ampiezza e l'altezza degli elementi includerà il bordo e il padding al loro interno, 
+            ma non il margine esterno.
+font-family: "Poppins",sans-serif imposta la famiglia di caratteri per il testo del documento come "Poppins" con un fallback 
+              a una famiglia di caratteri sans-serif se "Poppins" non è disponibile.
+*/
+/*
+La proprietà CSS "flex-wrap: wrap;" impostata sull'elemento con classe "row" rende la griglia flessibile e responsiva. 
+Quando lo schermo diventa più piccolo, gli elementi figli si avvolgono automaticamente per adattarsi allo spazio disponibile. 
+Inoltre, le unità di misura "em" utilizzate per impostare le dimensioni e il padding degli elementi si adattano in base 
+alla dimensione del testo. Ciò significa che gli elementi saranno dimensionati proporzionalmente al testo, rendendo il 
+layout più flessibile e adattabile a schermi di diverse dimensioni.*/
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+/*border: 1px solid orange; imposta un bordo solido arancione di 1 pixel attorno all'elemento.
+display: flex; imposta il valore della proprietà CSS display sull'elemento a flex. Ciò significa che 
+l'elemento verrà visualizzato come un contenitore flessibile che può contenere uno o più elementi figli. 
+Questo è il primo passo per impostare una griglia flessibile.
+flex-wrap: wrap; imposta la proprietà CSS flex-wrap sull'elemento a wrap. Ciò significa che gli elementi figli del 
+contenitore flessibile possono essere avvolti in modo da adattarsi al contenitore quando la larghezza dello schermo è ridotta.
+padding: 2em 1em; imposta un riempimento interno di 2 "em" sull'asse y e di 1 "em" sull'asse x. 
+Questo crea uno spazio interno attorno ai figli dell'elemento, senza influire sulla larghezza e 
+sull'altezza complessive dell'elemento.*/
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em 4em;
+  text-align: center; /* Questo mi ha spostato nome,descrizione e icone al centro sotto l'immagine*/
+}
+.column {
+  width: 100%; /* Se si mette un'altra dimensione, le colonne possono mettersi una accanto all'altra con dimensioni pagina
+                  più piccole */
+  padding: 2em 1em; /* Distanza tra le colonne quando sono uno una riga */
+}
+h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 5em;
+  color: white;
+}
+/*Il codice fornito rappresenta due regole CSS: la prima, .box, definisce lo stile di base per un elemento 
+che ha l'attributo class impostato su "box". La seconda, .box .img-container, 
+definisce lo stile per un elemento figlio di un elemento con classe "box" che ha l'attributo class impostato su "img-container". 
+Ecco cosa fa ciascuna regola:
+
+.box:
+box-shadow: 0 0 0.2em rgba(25,0,58,0.15); imposta un'ombra attorno all'elemento con un'opacità del 15% e un colore specificato 
+come rgba(25,0,58), che rappresenta una tonalità di viola scuro.
+border-radius: 0.6em; arrotonda gli angoli dell'elemento impostando un raggio di 0.6 "em".
+color: black; imposta il colore del testo dell'elemento su nero.
+cursor: pointer; imposta il cursore del mouse sull'elemento come un puntatore, indicando che l'elemento è interattivo.*/
+.box {
+  box-shadow: 0 0 0.2em rgba(25, 0, 58, 0.15);
+  padding: 3.5em 1em;
+  color: #1d1d1f;
+  cursor: pointer;
+  /* le righe seguenti fanno si che i vertici siano circolari */
+  border-radius: 25px;
+  background-position: left top;
+  background-repeat: repeat;
+  background-color: #f5f5f5;
+  transition: all 350ms ease-in-out;
+}
+/*margin: 0 auto 2em auto; imposta il margine superiore e inferiore dell'elemento su 2 "em" e 
+il margine sinistro e destro su "auto", il che centra l'elemento orizzontalmente all'interno del suo contenitore*/
+.box .img-container {
+  width: 10em;
+  height: 10em;
+  background-color: black;
+  padding: 0.5em;
+  border-radius: 50%;
+  margin: 0 auto 3em auto; /* Essenziale sennò l'immagine si sposta verso sinistra */
+}
+.box img {
+  width: 100%;
+}
+.box h3 {
+  font-weight: 500;
+}
+.box p {
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+.icons {
+  width: 50%;
+  min-width: 90px; /* Così gli dico che ci deve essere una distanza minima */
+  margin: auto; /*centers the element horizontally within its parent element. This means that the icons will be centered on the page*/
+  display: flex;
+  justify-content: space-between; /* Spazio tra le icone e con width ho settato quanto */
+}
+.box a {
+  font-size: 3em; /* Setto dimensione link e quindi delle icone */
+}
+.box a:hover {
+  transform: scale(1.1);
+}
+.fa-linkedin {
+  color: rgb(4, 4, 121);
+}
+.fa-github {
+  color: solid black;
+}
+.fa-music {
+  color: red;
+  font-size: 35px;
+}
+.fa-headphones {
+  color: blue;
+  font-size: 35px;
+}
+.box:hover {
+  /* Transizione tra i colori */
+  color: rgb(85, 84, 84);
+  background-color: #b9b9b9;
+  color: white; /* tono di grigio scuro */
+}
+.box:hover .img-container {
+  transform: scale(
+    1.1
+  ); /* Aumenta dimensione dell'immagine quando ci passi sopra */
+}
+
+@media screen and (min-width: 768px) {
+  .about-section {
+    height: 100vw;
+  }
+  section {
+    padding: 2em 6em;
+  }
+}
+/*
+This media query applies styles when the screen width is at least 768 pixels. 
+The section element will have a padding of 1em (top and bottom) and 7em (left and right) when the screen is at least 768 pixels wide.
+*/
+/*
+This media query applies styles when the screen width is at least 992 pixels. 
+The section element will have a padding of 1em (top, bottom, left and right) when the screen is at least 992 pixels wide. 
+The .box element will have a padding of 5em (top and bottom) and 1em (left and right). 
+The .column elements will have a flex value of 0 0 33.33% (which means they will not grow or shrink, and w
+ill have a width of one-third of the container), a max-width of 33.33% (to ensure they do not become wider 
+than one-third of the container), and a padding of 0 (top and bottom) and 1em (left and right).*/
+@media screen and (min-width: 992px) {
+  section {
+    padding: 1em;
+  }
+  .box {
+    padding: 5em 1em;
+  }
+  .column {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    padding: 1 1em;
+  }
+}
+.container {
+  max-width: 100%;
+  overflow: hidden;
+}
+.about-section {
+  box-sizing: border-box;
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid black;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(85, 84, 84);
+  color: white;
+}
+.us {
+  background-color: rgb(85, 84, 84);
+  background-size: cover;
+}
+.about-section p {
+  text-align: center;
+}
+h3.hidden {
+  opacity: 0;
+  transform: translateY(100px);
+  background-image: linear-gradient(to right, #ff5733, #433b3b);
+  margin-top: 10px;
+  transition: 0.5s ease-in-out;
+  color: white;
+  font-family: sans-serif;
+  font-size: 19px;
+  padding: 10px;
+  border-radius: 10px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.column:hover h3.hidden {
+  opacity: 1; /* Completely visible. */
+  transform: translateY(0px);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  color: solid black;
+}
+.reveal {
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: all 1s ease;
+}
+/* "transition: all 2s ease;" specifies that any CSS property changes on the element will have a duration of 2 seconds 
+and will have an "ease" timing function, which means the animation will start slowly, accelerate through the middle, 
+and slow down again at the end.*/
+
+.reveal.active {
+  transform: translateY(0px);
+  opacity: 1;
+}
+div.img-container .nostre_img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.container_mega_img {
+  min-height: 400px;
+}
+@media only screen and (max-width: 768px) {
+  .container_mega_img {
+    min-height: 200px;
+    /* Altezza dell'immagine per schermi più piccoli */
+  }
+  .container_mega_img img {
+    height: 200px;
+    object-fit: cover;
+  }
+  .about-section {
+    height: 10%;
+  }
+  .col-sm-6 {
+    padding: 10px;
+  }
+}
+.limit {
+  text-align: center;
+  width: 550vm;
+  word-wrap: break-word;
+}
+.box:hover > i {
+  transform: scale(1.1);
+  transform: translateY(-30px);
+  transition: transform 1s ease;
+}
+
+@media screen and (max-width: 920px) {
+  .my_nav-item .nav-link:hover::before {
+    visibility: visible;
+    width: 15%;
+  }
+}
+
+@media screen and (min-width: 921px) {
+  .my_nav-item .nav-link:hover::before {
+    visibility: visible;
+    width: 100%;
+  }
+}
