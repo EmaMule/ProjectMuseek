@@ -45,6 +45,7 @@ section {
   align-items: center;
   backdrop-filter: blur(30px);
 }
+
 h1 {
   color: white;
   text-align: center;

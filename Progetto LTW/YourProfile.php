@@ -3,7 +3,37 @@ session_start();
 if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
   header("Location: login.html");
 }
+
+include "./connection.php";
+$query = "SELECT * from utente where email=$1;";
+
+$result = pg_query_params($dbconn, $query, array($_SESSION["email"]));
+
+$line = pg_fetch_array($result, null, PGSQL_ASSOC);
+
+
+$numlike = $line["numlike"];
+$numfollower = $line["numfollower"];
+$foto_profilo = $line["foto_profilo"]; 
+$numarticles = $line["numarticles"];
+$nome = $line["nome"];
+$cognome = $line["cognome"];
+$eta = $line["eta"];
+$nazione = $line["nazione"];
+$citta = $line["citta"];
+
+
+if(!isset($foto_profilo)){
+  $foto_profilo = file_get_contents("images/Vegeta.png");
+  $img = base64_encode($foto_profilo);
+}
+else{
+  $img = base64_encode($foto_profilo);
+}
+
 ?>
+<!--OSSERVAZIONE: UN UTENTE CHE SI è REGISTEATO E VA SU your profile non vede mai il count dei follower
+aumentare, deve fare login-logout-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +55,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
   <header>
     <div class="container p-0">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand my_brand" href="homepage.html">Music.com</a>
+        <a class="navbar-brand my_brand" href="homepage.php">Museek.com</a>
         <button class="navbar-toggler ml-auto" id="bottone_toggle" value="NOT clicked" type="button"
           data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -34,16 +64,16 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto mb-2 mb-lg-0 ml-3 justify-content-center" id="lista_navbar">
             <li class="nav-item my_nav-item">
-              <a class="nav-link" href="#">Latest News</a>
+              <a class="nav-link" href="archive.php">Latest News</a>
             </li>
             <li class="nav-item my_nav-item">
-              <a class="nav-link" href="#">For You</a>
+              <a class="nav-link" href="Post.php">For You</a>
             </li>
             <li class="nav-item my_nav-item">
-              <a class="nav-link" href="YourProfile.html">Your Profile</a>
+              <a class="nav-link" href="YourProfile.php">Your Profile</a>
             </li>
             <li class="nav-item my_nav-item">
-              <a class="nav-link" href="aboutus.html">About Us</a>
+              <a class="nav-link" href="aboutus.php">About Us</a>
             </li>
           </ul>
         </div>
@@ -58,21 +88,8 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
             aria-valuetext="Accedi Ora"></i></a>
       </nav>
       <div class="form_popup">
-        <form class="form-container" id="my_form">
-          <h1 class="my_h1">Login</h1>
-          <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="email" required />
-
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required />
-
-          <button type="submit" class="btn">Login</button>
-          <p class="messaggio">
-            Not registered? <a href="#">Create an account</a>
-          </p>
-          <p class="messaggio">
-            Password Forgotten? <a href="#">Click here</a>
-          </p>
+        <form action="./no-login/no-login.php" method="POST" class="form-container" id="my_form">
+          <button type="submit" class="btn">Log Out</button>
         </form>
       </div>
     </div>
@@ -92,7 +109,9 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
         <div class="row">
           <div class="col-lg-7 col-md-10">
             <!--IMPORTANTE , qua User dovrà essere cambiato dinamicamente a seconda di chi è l'utente che ha fatto il login-->
-            <h1 class="display-3 text-white">Hello User</h1>
+            <h1 class="display-3 text-white">Hello
+              <?php echo htmlspecialchars($_SESSION["name"]) ?>
+            </h1>
             <p class="text-white mt-0 mb-5">
               This is your profile page. You can see your articles and the
               progress you made!
@@ -109,7 +128,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
               <div class="col-lg-3 order-lg-2">
                 <div class="my_profile_card_image">
                   <a href="#">
-                    <img src="./images/Emanuele.jpeg" class="rounded-circle" />
+                    <img src="data:image/jpg;charset=utf8;base64,<?php echo ($img); ?>" class="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -120,19 +139,19 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                   <div class="my_profile_stats d-flex justify-content-center mt-md-5 mb-sm-5">
                     <div>
                       <p class="my_heading">
-                        <?php echo htmlspecialchars($_SESSION["follower"]); ?>
+                        <?php echo htmlspecialchars($numfollower); ?>
                       </p>
                       <p class="my_description">Followers</p>
                     </div>
                     <div>
                       <p class="my_heading">
-                        <?php echo htmlspecialchars($_SESSION["articles"]); ?>
+                        <?php echo htmlspecialchars($numarticles); ?>
                       </p>
                       <p class="my_description">Articles</p>
                     </div>
                     <div>
                       <p class="my_heading">
-                        <?php echo htmlspecialchars($_SESSION["likes"]); ?>
+                        <?php echo htmlspecialchars($numlike);?>
                       </p>
                       <p class="my_description">Likes</p>
                     </div>
@@ -142,13 +161,13 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
             </div>
             <div class="text-center mb-5">
               <h3>
-                <?php echo htmlspecialchars($_SESSION["name"] . " " . $_SESSION["cognome"]); ?> <span
+                <?php echo htmlspecialchars($nome . " " . $cognome); ?> <span
                   class="font-weight-light"> 22</span>
               </h3>
               <div class="h5 font-weight-300">
                 <i class="my_location mr-2">
-                  <?php if (isset($_SESSION["citta"]) and isset($_SESSION["nazione"])) {
-                    echo htmlspecialchars($_SESSION["citta"] . " , " . $_SESSION["nazione"]);
+                  <?php if (isset($citta) and isset($nazione)) {
+                    echo htmlspecialchars($citta . " , " . $nazione);
                   } else {
                     echo "&nbsp";
                   }
@@ -168,22 +187,22 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
               </div>
             </div>
             <div class="card-body">
-              <form>
+              <form method="POST" action="./yourprofile/yourprofile.php">
                 <h6 class="heading-small mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" class="form-control form-control-alternative"
-                          placeholder="Username" value=<?php echo htmlspecialchars($_SESSION["username"]); ?> />
+                        <input type="text" id="input-username" name="inputUsername"
+                          class="form-control form-control-alternative" placeholder="Username" value=<?php echo htmlspecialchars($_SESSION["username"]); ?> />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="input-email">Email address</label>
-                        <input type="email" id="input-email" class="form-control form-control-alternative"
-                          placeholder="email" value=<?php echo htmlspecialchars($_SESSION["email"]); ?> />
+                        <input type="email" id="input-email" name="inputEmail"
+                          class="form-control form-control-alternative" placeholder="email" readonly value=<?php echo htmlspecialchars($_SESSION["email"]); ?> />
                       </div>
                     </div>
                   </div>
@@ -191,15 +210,15 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" class="form-control form-control-alternative"
-                          placeholder="First name" value=<?php echo htmlspecialchars($_SESSION["name"]); ?> />
+                        <input type="text" id="input-first-name" name="inputName"
+                          class="form-control form-control-alternative" placeholder="First name" value=<?php echo htmlspecialchars($nome); ?> />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" class="form-control form-control-alternative"
-                          placeholder="Last name" value=<?php echo htmlspecialchars($_SESSION["cognome"]); ?> />
+                        <input type="text" id="input-last-name" name="inputCognome"
+                          class="form-control form-control-alternative" placeholder="Last name" value=<?php echo htmlspecialchars($cognome); ?> />
                       </div>
                     </div>
                   </div>
@@ -212,9 +231,9 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">City</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative"
-                          placeholder="City" value=<?php if ($_SESSION["citta"]) {
-                            echo htmlspecialchars($_SESSION["citta"]);
+                        <input type="text" id="input-city" name="inputCitta"
+                          class="form-control form-control-alternative" placeholder="City" value=<?php if ($citta) {
+                            echo htmlspecialchars($citta);
                           } else {
                             echo "&nbsp";
                           } ?> />
@@ -223,9 +242,9 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Country</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative"
-                          placeholder="Country" value=<?php if ($_SESSION["nazione"]) {
-                            echo htmlspecialchars($_SESSION["nazione"]);
+                        <input type="text" id="input-country" name="inputNazione"
+                          class="form-control form-control-alternative" placeholder="Country" value=<?php if ($nazione) {
+                            echo htmlspecialchars($nazione);
                           } else {
                             echo "&nbsp";
                           } ?> />
@@ -235,7 +254,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                 </div>
                 <hr />
                 <div class="container-fluid">
-                  <a href="#!" class="btn btn-outline-success float-right">Edit profile</a>
+                  <button type="submit" class="btn btn-outline-success float-right">Edit profile</button>
                 </div>
               </form>
             </div>

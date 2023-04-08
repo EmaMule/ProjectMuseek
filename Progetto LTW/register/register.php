@@ -26,7 +26,11 @@ include "../connection.php";
         $username = $_POST["inputUsername"];
         $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $username, $email, $password));
         if ($result) {
-            echo "Registrazione è andata a buon fine!<br> Clicca <a href=\"../login.html\">qui</a> per loggarti";
+            session_start();
+            $_SESSION["loggedinusers"] = true;
+            $_SESSION["email"] = $email;
+            $_SESSION["username"] = $username;
+            header("Location:../YourProfile.php");
         } else {
             die("La registrazione non è andata a buon fine.");
         }

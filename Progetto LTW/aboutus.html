@@ -54,7 +54,7 @@
                 <a class="nav-link" href="#">For You</a>
               </li>
               <li class="nav-item my_nav-item">
-                <a class="nav-link" href="YourProfile.html">Your Profile</a>
+                <a class="nav-link" href="YourProfile.php">Your Profile</a>
               </li>
               <li class="nav-item my_nav-item">
                 <a class="nav-link" href="aboutus.html">About Us</a>
@@ -86,13 +86,13 @@
           ></a>
         </nav>
         <div class="form_popup">
-          <form class="form-container" id="my_form">
+          <form action="./login/login.php" method="POST" class="form-container" id="my_form">
             <h1 class="my_h1">Login</h1>
             <label for="email"><b>Email</b></label>
             <input
               type="text"
               placeholder="Enter Email"
-              name="email"
+              name="inputEmail"
               required
             />
 
@@ -100,7 +100,7 @@
             <input
               type="password"
               placeholder="Enter Password"
-              name="psw"
+              name="inputPassword"
               required
             />
 
