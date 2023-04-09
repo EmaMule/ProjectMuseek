@@ -1,4 +1,72 @@
-<?php session_start(); ?>
+<?php session_start();
+include "./connection.php";
+$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo ORDER BY articolo.numlikes DESC
+         limit 12;";
+$result = pg_query($dbconn, $query);
+
+if (!$result) {
+    echo "An error has occurred whilst loading the articles!";
+    exit;
+}
+$articoli = array();
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    $id = $line["id"];
+    $utente = $line["utente"];
+    $titolo = $line["titolo"];
+    $descrizione = $line["descrizione"];
+    $query3 = "SELECT * from media_articolo where id_articolo=$1;";
+    $result3 = pg_query_params($dbconn, $query3, array($id));
+    $line3 = pg_fetch_array($result3, null, PGSQL_ASSOC);
+    $media = $line3["contenuto"] ?? null;
+    $media = (pg_unescape_bytea($media));
+    $articoli[] = array(
+        'utente' => $utente,
+        'titolo' => $titolo,
+        'descrizione' => $descrizione,
+        'media' => $media
+    );
+}
+/* Fine Prima Sezione */
+$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo ORDER BY articolo.data DESC, articolo.ora DESC
+         limit 4;";
+$result = pg_query($dbconn, $query);
+if (!$result) {
+    echo "An error has occurred whilst loading the articles!";
+    exit;
+}
+$articoli_nuovi = array();
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    $id = $line["id"];
+    $utente = $line["utente"];
+    $titolo = $line["titolo"];
+    $descrizione = $line["descrizione"];
+    $articoli_nuovi[] = array(
+        'utente' => $utente,
+        'titolo' => $titolo,
+        'descrizione' => $descrizione,
+    );
+}
+/* Fine Seconda sezione */
+$query = "SELECT * from utente ORDER BY numfollower DESC
+         limit 4;";
+$result = pg_query($dbconn, $query);
+if (!$result) {
+    echo "An error has occurred whilst loading the users!";
+    exit;
+}
+$utenti_follower = array();
+while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    $utente = $line["username"];
+    $media = $line["foto_profilo"];
+    $media = (pg_unescape_bytea($media));
+    $utenti_follower[] = array(
+        'utente' => $utente,
+        'media' => $media
+    );
+}
+/* Fine Terza Sezione */
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -161,20 +229,17 @@
                                             <div class="col">
                                                 <!--CARD-->
                                                 <div class="card bg-light text-white card_top_g">
-                                                    <img class="card-img card_top_left_g" id="img-card-0"
-                                                        src="data:image/png;base64,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"
+                                                    <img class="card-img card_bottom_left_top_g" id="img-card-0"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[0]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-0"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[0]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-0">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[0]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -182,19 +247,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_top_right_g" id="imh-card-1"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[1]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a id="title-card-1" class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[1]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-1">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[1]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -204,19 +266,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_left_top_g" id="img-card-2"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[2]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-2"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[2]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-2">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[2]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -224,19 +283,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_right_top_g" id="img-card-3"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[3]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-3"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[3]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-3">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[3]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -252,19 +308,16 @@
                                                 <!--CARD-->
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_top_left_g" id="img-card-4"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[4]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a id="title-card-4" class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[4]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-4">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[4]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -272,19 +325,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_top_right_g" id="img-card-5"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[5]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[5]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-5">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[5]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -294,20 +344,17 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_left_top_g" id="img-card-6"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[6]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g"
                                                         id="title-card-6">
                                                         <a class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[6]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-6">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[6]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -315,19 +362,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_right_top_g" id="img-card-7"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[7]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a id="title-card-7" class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[7]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-7">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[7]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -343,19 +387,16 @@
                                                 <!--CARD-->
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_top_left_g" id="img-card-8"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[8]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a id="title-card-8" class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[8]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-8">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[8]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -363,19 +404,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_top_right_g" id="img-card-9"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[9]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a id="title-card-9" class="h5"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[9]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-9">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[9]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -385,19 +423,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_left_top_g" id="img-card-10"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[10]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-10"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[10]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-10">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[10]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -405,19 +440,16 @@
                                             <div class="col">
                                                 <div class="card bg-light text-white card_top_g">
                                                     <img class="card-img card_bottom_right_top_g" id="img-card-11"
-                                                        src="data:image/png;base64,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"
+                                                        src='data:image/jpg;charset=utf8;base64,<?php echo $articoli[11]['media']; ?>'
                                                         alt="Card image" />
                                                     <div class="card-img-overlay card_paragraph_top_g">
                                                         <a class="h5" id="title-card-11"
                                                             href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                                        TMZ TITLE
+                                                        <?php echo $articoli[11]['titolo']; ?>
                                                         </a>
                                                         <p class="card-text font-italic text_in_card_top_g"
                                                             id="text-card-11">
-                                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                                            Sed magni cum accusamus velit temporibus veniam quidem
-                                                            maxime ratione quae obcaecati vero consequuntur, quibusdam
-                                                            at, animi minima suscipit optio exercitationem error?
+                                                            <?php echo $articoli[11]['descrizione']; ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -445,25 +477,21 @@
     <hr>
     <div class="row d-flex flex-wrap mb-3 no-gutters">
         <div class="col-md-6">
-            <h2 class="most_recent_top_g">NEW STORIES</h2>
+            <h2 class="most_recent_top_g">BEST USERS IN THE WORLD</h2>
             <div class="scene_top_g">
                 <div class="carousel_top_g">
                     <div class="carousel__cell_top_g">
                         <!--IMMAGINI-->
                         <div class=" card card_cube_top_g">
                             <img class="img_cube_top_g card-img" id="img-cube-0"
-                                src="data:image/png;base64,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"
+                                src='data:image/jpg;charset=utf8;base64,<?php echo $utenti_follower[0]['media']; ?>'
                                 alt="Card image" />
-                            <div class="card-img-overlay text-white">
+                            <div class="card-img-overlay text-black">
                                 <a class="h3" id="title-cube-0"
                                     href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                TMZ TITLE
+                                <?php echo $utenti_follower[0]['utente']; ?>
                                 </a>
-                                <p class="card-text font-italic card_cube_text_top_g" id="text-cube-0">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus
-                                    velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur,
-                                    quibusdam at, animi minima suscipit optio exercitationem error?
-                                </p>
+
                             </div>
                         </div>
                     </div>
@@ -471,54 +499,39 @@
                     <div class="carousel__cell_top_g">
                         <div class=" card card_cube_top_g">
                             <img class="img_cube_top_g card-img" id="img-cube-1"
-                                src="data:image/png;base64,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"
+                                src='data:image/jpg;charset=utf8;base64,<?php echo $utenti_follower[1]['media']; ?>'
                                 alt="Card image" />
-                            <div class="card-img-overlay text-white">
+                            <div class="card-img-overlay text-black">
                                 <a id="title-cube-1" class="h3"
                                     href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                TMZ TITLE
+                                <?php echo $utenti_follower[1]['utente']; ?>
                                 </a>
-                                <p class="card-text font-italic card_cube_text_top_g" id="text-cube-1">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus
-                                    velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur,
-                                    quibusdam at, animi minima suscipit optio exercitationem error?
-                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="carousel__cell_top_g">
                         <div class=" card card_cube_top_g">
                             <img class="img_cube_top_g card-img" id="img-cube-2"
-                                src="data:image/png;base64,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"
+                                src='data:image/jpg;charset=utf8;base64,<?php echo $utenti_follower[2]['media']; ?>'
                                 alt="Card image" />
-                            <div class="card-img-overlay text-white">
+                            <div class="card-img-overlay text-black">
                                 <a class="h3" id="title-cube-2"
                                     href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                TMZ TITLE
+                                <?php echo $utenti_follower[2]['utente']; ?>
                                 </a>
-                                <p class="card-text font-italic card_cube_text_top_g" id="text-cube-2">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus
-                                    velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur,
-                                    quibusdam at, animi minima suscipit optio exercitationem error?
-                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="carousel__cell_top_g">
                         <div class=" card card_cube_top_g">
                             <img class="img_cube_top_g card-img" id="img-cube-3"
-                                src="data:image/png;base64,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"
+                                src='data:image/jpg;charset=utf8;base64,<?php echo $utenti_follower[3]['media']; ?>'
                                 alt="Card image" />
-                            <div class="card-img-overlay text-white">
+                            <div class="card-img-overlay text-black">
                                 <a class="h3" id="title-cube-3"
                                     href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiAuuy1zv_9AhUahP0HHXP-BqcQFnoECA4QAQ&url=https%3A%2F%2Fwww.tmz.com%2F&usg=AOvVaw0QIdwyeMkyrNPrxkpccs0F" />
-                                TMZ TITLE
+                                <?php echo $utenti_follower[3]['utente']; ?>
                                 </a>
-                                <p class="card-text font-italic card_cube_text_top_g" id="text-cube-3">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed magni cum accusamus
-                                    velit temporibus veniam quidem maxime ratione quae obcaecati vero consequuntur,
-                                    quibusdam at, animi minima suscipit optio exercitationem error?
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -539,35 +552,39 @@
         <div class="col-md-6">
             <h2 class="most_recent_top_g ">LATEST STORIES</h2>
             <article class="bottom_division_top_g">
-                <h3>NEWS</h3>
-                <p>Welcome to MusicNews, where you're getting only the hottest news about
-                    popstars and singers from all over the world! Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Architecto consectetur eaque quidem? Officiis labore illum deleniti expedita fugiat animi cum,
-                    modi, vero suscipit veniam dolore, natus odit itaque eum officia.</p>
+                <h3>
+                    <?php echo $articoli_nuovi[0]['titolo']; ?>
+                </h3>
+                <p>
+                    <?php echo $articoli_nuovi[0]['descrizione']; ?>
+                </p>
                 <a href="#"> Read More</a>
             </article>
             <article class="bottom_division_top_g">
-                <h3>NEWS</h3>
-                <p>Welcome to MusicNews, where you're getting only the hottest news about
-                    popstars and singers from all over the world! Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Architecto consectetur eaque quidem? Officiis labore illum deleniti expedita fugiat animi cum,
-                    modi, vero suscipit veniam dolore, natus odit itaque eum officia.</p>
+                <h3>
+                    <?php echo $articoli_nuovi[1]['titolo']; ?>
+                </h3>
+                <p>
+                    <?php echo $articoli_nuovi[1]['descrizione']; ?>.
+                </p>
                 <a href="#"> Read More</a>
             </article>
             <article class="bottom_division_top_g">
-                <h3>NEWS</h3>
-                <p>Welcome to MusicNews, where you're getting only the hottest news about
-                    popstars and singers from all over the world! Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Architecto consectetur eaque quidem? Officiis labore illum deleniti expedita fugiat animi cum,
-                    modi, vero suscipit veniam dolore, natus odit itaque eum officia.</p>
+                <h3>
+                    <?php echo $articoli_nuovi[2]['titolo']; ?>
+                </h3>
+                <p>
+                    <?php echo $articoli_nuovi[2]['descrizione']; ?>
+                </p>
                 <a href="#"> Read More</a>
             </article>
             <article>
-                <h3>NEWS</h3>
-                <p>Welcome to MusicNews, where you're getting only the hottest news about
-                    popstars and singers from all over the world! Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Architecto consectetur eaque quidem? Officiis labore illum deleniti expedita fugiat animi cum,
-                    modi, vero suscipit veniam dolore, natus odit itaque eum officia.</p>
+                <h3>
+                    <?php echo $articoli_nuovi[3]['titolo']; ?>
+                </h3>
+                <p>
+                    <?php echo $articoli_nuovi[3]['descrizione']; ?>
+                </p>
                 <a href="#"> Read More</a>
             </article>
         </div>
