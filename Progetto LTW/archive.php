@@ -1,10 +1,11 @@
 <?php 
 session_start();
 include "./connection.php";
+unset($_SESSION['indice-commenti']);
 
 $count_pagine = 1;
 
-$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo
+$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo order by id desc
          limit 5;";
 $result = pg_query($dbconn, $query);
 
@@ -56,7 +57,7 @@ if(!$result){
                             <a class="nav-link" href="archive.php">Latest News</a>
                         </li>
                         <li class="nav-item my_nav-item">
-                            <a class="nav-link" href="Post.html">For You</a>
+                            <a class="nav-link" href="Post.php">For You</a>
                         </li>
                         <li class="nav-item my_nav-item">
                             <a class="nav-link" href="YourProfile.php">Your Profile</a>
@@ -152,23 +153,16 @@ if(!$result){
                             $query3 = "SELECT * from media_articolo where id_articolo=$1;";
                             $result3 = pg_query_params($dbconn,$query3,array($id));
                             $line3 = pg_fetch_array($result3,null,PGSQL_ASSOC);
-                            $media = $line3["contenuto"];
+                            $media = $line3["contenuto"] ?? null;
 
                             if(!isset($media)){
                                 $media = file_get_contents("images/article-img-placeholder.jpg");
                                 $media = base64_encode($media);
                             }
                             else{
-                                $media = base64_encode($media);
+                                $media = (pg_unescape_bytea($media));
                             }
-                            
-                            if(!isset($foto_profilo)){
-                                $foto_profilo = file_get_contents("images/Vegeta.png");
-                                $foto_profilo = base64_encode($foto_profilo);
-                              }
-                              else{
-                                $foto_profilo = base64_encode($foto_profilo);
-                              }
+                            $foto_profilo = (pg_unescape_bytea($foto_profilo));
 
                               echo"
 
@@ -179,7 +173,7 @@ if(!$result){
                                     </header>
 
                                 </a>
-                                <a href='#'>
+                                <a href='./post/post_view.php?article=$id'>
                                     <header class='h3 article_heading_top_g'>
                                         $titolo
                                     </header>

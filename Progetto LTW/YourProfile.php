@@ -21,19 +21,14 @@ $cognome = $line["cognome"];
 $eta = $line["eta"];
 $nazione = $line["nazione"];
 $citta = $line["citta"];
+$img = pg_unescape_bytea($foto_profilo);
 
-
-if(!isset($foto_profilo)){
+/*if(!isset($foto_profilo)){
   $foto_profilo = file_get_contents("images/Vegeta.png");
   $img = base64_encode($foto_profilo);
-}
-else{
-  $img = base64_encode($foto_profilo);
-}
+}*/
 
 ?>
-<!--OSSERVAZIONE: UN UTENTE CHE SI è REGISTEATO E VA SU your profile non vede mai il count dei follower
-aumentare, deve fare login-logout-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,6 +39,7 @@ aumentare, deve fare login-logout-->
   <link rel="stylesheet" href="./bootstrap-4.0.0/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="./stili.css" />
   <link rel="stylesheet" href="./urpp.css" />
+  <link rel="stylesheet" href="./post.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -187,7 +183,7 @@ aumentare, deve fare login-logout-->
               </div>
             </div>
             <div class="card-body">
-              <form method="POST" action="./yourprofile/yourprofile.php">
+              <form method="POST" action="./yourprofile/yourprofile.php" enctype="multipart/form-data">
                 <h6 class="heading-small mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -232,28 +228,28 @@ aumentare, deve fare login-logout-->
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-city">City</label>
                         <input type="text" id="input-city" name="inputCitta"
-                          class="form-control form-control-alternative" placeholder="City" value=<?php if ($citta) {
-                            echo htmlspecialchars($citta);
-                          } else {
-                            echo "&nbsp";
-                          } ?> />
+                          class="form-control form-control-alternative" placeholder="City" value=<?php echo $citta ? htmlspecialchars($citta) : ""; ?>>
                       </div>
                     </div>
+                    <?php echo ""?>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Country</label>
                         <input type="text" id="input-country" name="inputNazione"
-                          class="form-control form-control-alternative" placeholder="Country" value=<?php if ($nazione) {
-                            echo htmlspecialchars($nazione);
-                          } else {
-                            echo "&nbsp";
-                          } ?> />
+                          class="form-control form-control-alternative" placeholder="Country" value=<?php echo $nazione ? htmlspecialchars($nazione) : ""; ?>> <!--PROBLEMA DA CORREGGERE FORM-->
                       </div>
                     </div>
                   </div>
                 </div>
                 <hr />
                 <div class="container-fluid">
+                <div class="col-lg-6 d-flex justify-content-starts">
+                  <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop your img here or click to upload</span>
+                    <input type="file" id="myFile" name="inputImage" class="drop-zone__input"
+                      accept=".jpeg, .jpg, .png" maxlength="2M"/>
+                  </div>
+                </div>
                   <button type="submit" class="btn btn-outline-success float-right">Edit profile</button>
                 </div>
               </form>
@@ -314,6 +310,7 @@ aumentare, deve fare login-logout-->
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="./metodi.js"></script>
+  <script src="urpp.js"></script>
 </body>
 
 </html>
