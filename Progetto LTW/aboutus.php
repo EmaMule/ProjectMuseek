@@ -68,7 +68,7 @@
 
                     <button type=\"submit\" class=\"btn\">Login</button>
                     <p class=\"messaggio\">
-                        Not registered? <a href=\"Login.php\">Create an account</a>
+                        Not registered? <a href=\"login.html\">Create an account</a>
                     </p>
                     <p class=\"messaggio\">
                         Password Forgotten? <a href=\"#\">Click here</a>

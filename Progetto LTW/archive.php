@@ -1,14 +1,15 @@
-<?php
+<?php 
 session_start();
 include "./connection.php";
+unset($_SESSION['indice-commenti']);
 
 $count_pagine = 1;
 
-$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo
-         limit 20;";
+$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo order by id desc
+         limit 5;";
 $result = pg_query($dbconn, $query);
 
-if (!$result) {
+if(!$result){
     echo "An error has occurred whilst loading the articles!";
     exit;
 }
@@ -56,7 +57,7 @@ if (!$result) {
                             <a class="nav-link" href="archive.php">Latest News</a>
                         </li>
                         <li class="nav-item my_nav-item">
-                            <a class="nav-link" href="Post.html">For You</a>
+                            <a class="nav-link" href="Post.php">For You</a>
                         </li>
                         <li class="nav-item my_nav-item">
                             <a class="nav-link" href="YourProfile.php">Your Profile</a>
@@ -89,7 +90,7 @@ if (!$result) {
 
                     <button type=\"submit\" class=\"btn\">Login</button>
                     <p class=\"messaggio\">
-                        Not registered? <a href=\"Login.php\">Create an account</a>
+                        Not registered? <a href=\"login.html\">Create an account</a>
                     </p>
                     <p class=\"messaggio\">
                         Password Forgotten? <a href=\"#\">Click here</a>
@@ -135,34 +136,35 @@ if (!$result) {
             </div>
             <div class="col-10">
                 <ul class="article_ul_top_g">
-                    <?php
-                    while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-                        $id = $line["id"];
-                        $utente = $line["utente"];
-                        $titolo = $line["titolo"];
-                        $descrizione = $line["descrizione"];
-                        $numlikes = $line["numlikes"];
+                <?php 
+                        while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
+                            $id = $line["id"];
+                            $utente = $line["utente"];
+                            $titolo = $line["titolo"];
+                            $descrizione = $line["descrizione"];
+                            $numlikes = $line["numlikes"];
+                            
+                            $query2 = "SELECT username, foto_profilo from utente where email=$1;";
+                            $res = pg_query_params($dbconn,$query2,array($utente));
+                            $line2 = pg_fetch_array($res,null,PGSQL_ASSOC);
+                            $username = $line2["username"];
+                            $foto_profilo = $line2["foto_profilo"];
+                            
+                            $query3 = "SELECT * from media_articolo where id_articolo=$1;";
+                            $result3 = pg_query_params($dbconn,$query3,array($id));
+                            $line3 = pg_fetch_array($result3,null,PGSQL_ASSOC);
+                            $media = $line3["contenuto"] ?? null;
 
-                        $query2 = "SELECT username, foto_profilo from utente where email=$1;";
-                        $res = pg_query_params($dbconn, $query2, array($utente));
-                        $line2 = pg_fetch_array($res, null, PGSQL_ASSOC);
-                        $username = $line2["username"];
-                        $foto_profilo = $line2["foto_profilo"];
+                            if(!isset($media)){
+                                $media = file_get_contents("images/article-img-placeholder.jpg");
+                                $media = base64_encode($media);
+                            }
+                            else{
+                                $media = (pg_unescape_bytea($media));
+                            }
+                            $foto_profilo = (pg_unescape_bytea($foto_profilo));
 
-                        $query3 = "SELECT * from media_articolo where id_articolo=$1;";
-                        $result3 = pg_query_params($dbconn, $query3, array($id));
-                        $line3 = pg_fetch_array($result3, null, PGSQL_ASSOC);
-                        $media = $line3["contenuto"] ?? null;
-
-                        if (!isset($media)) {
-                            $media = file_get_contents("images/article-img-placeholder.jpg");
-                            $media = base64_encode($media);
-                        } else {
-                            $media = (pg_unescape_bytea($media));
-                        }
-                        $foto_profilo = (pg_unescape_bytea($foto_profilo));
-
-                        echo "
+                              echo"
 
                               <li class='article_top_g article_container_top_g' id='article-0'>
                                 <a href='#'>
@@ -171,7 +173,7 @@ if (!$result) {
                                     </header>
 
                                 </a>
-                                <a href='#'>
+                                <a href='./post/post_view.php?article=$id'>
                                     <header class='h3 article_heading_top_g'>
                                         $titolo
                                     </header>
@@ -183,11 +185,11 @@ if (!$result) {
                             </li>
                               
                               ";
-
-                    }
+                        
+                        }
                     ?>
 
-
+                
                 </ul>
             </div>
             <div class="col-1">

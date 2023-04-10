@@ -31,6 +31,7 @@ include "../connection.php";
             $_SESSION["email"] = $email;
             $_SESSION["username"] = $username;
             header("Location:../YourProfile.php");
+
         } else {
             die("La registrazione non è andata a buon fine.");
         }

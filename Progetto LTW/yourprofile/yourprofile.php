@@ -26,13 +26,14 @@ include "../connection.php";
         $citta = $_POST["inputCitta"];
         $nazione = $_POST["inputNazione"];
         $username = $_POST["inputUsername"];
-        if (isset($_FILES['inputImage']['tmp_name']) && is_uploaded_file($_FILES['inputImage']['tmp_name'])) {
+        if(isset($_FILES['inputImage']['tmp_name'])&&is_uploaded_file($_FILES['inputImage']['tmp_name'])){
             $image = file_get_contents($_FILES['inputImage']['tmp_name']);
-        } else {
-            $image = base64_decode(pg_unescape_bytea($line["foto_profilo"])); //qua ho fatto una scelta per cui faccio update di foto anche quando l'utente non la cambia, possibilmente costoso inoltre riferimento per immagini
+        }
+        else{
+            $image=base64_decode(pg_unescape_bytea($line["foto_profilo"])); //qua ho fatto una scelta per cui faccio update di foto anche quando l'utente non la cambia, possibilmente costoso inoltre riferimento per immagini
         }
         if ($vecchiousername == $username) {
-            $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username, base64_encode($image), $email));
+            $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username,base64_encode($image), $email));
         } else {
             $query3 = "SELECT * from utente where username=$1;";
             $result_1 = pg_query_params($dbconn, $query3, array($username));
@@ -40,7 +41,7 @@ include "../connection.php";
                 echo "Username già usato Clicca <a href=\"../YourProfile.php\">qui </a> per riprovare";
                 return;
             } else {
-                $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username, $email, base64_encode($image)));
+                $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username, $email,base64_encode($image)));
             }
         }
         header("Location:../YourProfile.php");

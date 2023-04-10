@@ -21,12 +21,11 @@ include "../connection.php";
     $query = "SELECT * from utente where email=$1;"; //Lo si fa per motivi di sicurezza. Con query_params sostituiamo ad 1 il valore corretto.
     $result = pg_query_params($dbconn, $query, array($email));
 
-    if ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-        if ($line["password"] != $password) {
-            $messaggio_errore = "Credenziali di accesso non valide. Riprova.";
-            header("Location: ../Login.php?errore=" . urlencode($messaggio_errore));
-            exit();
-        } else {
+    if ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) { 
+        if($line["password"] != $password){
+            echo "La password non è corretta. Clicca <a href=\"../login.html\">qui </a> per riprovare";
+        }
+        else{
             session_start();
             $_SESSION["loggedinusers"] = true;
             $_SESSION["email"] = $email;
@@ -34,11 +33,9 @@ include "../connection.php";
             $_SESSION["username"] = $username;
             header("Location:../YourProfile.php");
         }
-
+        
     } else {
-        $messaggio_errore = "Credenziali di accesso non valide. Riprova.";
-        header("Location: ../Login.php?errore=" . urlencode($messaggio_errore));
-        exit();
+        echo $email . "L'indirizzo email non appartiene a nessun utente registrato. Clicca <a href=\"../login.html\">qui </a> per registrarti";
     }
     pg_close($dbconn);
     ?>

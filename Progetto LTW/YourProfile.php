@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
-  header("Location: Login.php");
+  header("Location: login.html");
 }
 
 include "./connection.php";
@@ -14,7 +14,7 @@ $line = pg_fetch_array($result, null, PGSQL_ASSOC);
 
 $numlike = $line["numlike"];
 $numfollower = $line["numfollower"];
-$foto_profilo = $line["foto_profilo"];
+$foto_profilo = $line["foto_profilo"]; 
 $numarticles = $line["numarticles"];
 $nome = $line["nome"];
 $cognome = $line["cognome"];
@@ -24,8 +24,8 @@ $citta = $line["citta"];
 $img = pg_unescape_bytea($foto_profilo);
 
 /*if(!isset($foto_profilo)){
-$foto_profilo = file_get_contents("images/Vegeta.png");
-$img = base64_encode($foto_profilo);
+  $foto_profilo = file_get_contents("images/Vegeta.png");
+  $img = base64_encode($foto_profilo);
 }*/
 
 ?>
@@ -44,7 +44,6 @@ $img = base64_encode($foto_profilo);
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://kit.fontawesome.com/d20fe07ffa.js" crossorigin="anonymous"></script>
-
   <title>YourProfile</title>
 </head>
 
@@ -148,7 +147,7 @@ $img = base64_encode($foto_profilo);
                     </div>
                     <div>
                       <p class="my_heading">
-                        <?php echo htmlspecialchars($numlike); ?>
+                        <?php echo htmlspecialchars($numlike);?>
                       </p>
                       <p class="my_description">Likes</p>
                     </div>
@@ -158,7 +157,8 @@ $img = base64_encode($foto_profilo);
             </div>
             <div class="text-center mb-5">
               <h3>
-                <?php echo htmlspecialchars($nome . " " . $cognome); ?> <span class="font-weight-light"> 22</span>
+                <?php echo htmlspecialchars($nome . " " . $cognome); ?> <span
+                  class="font-weight-light"> 22</span>
               </h3>
               <div class="h5 font-weight-300">
                 <i class="my_location mr-2">
@@ -183,8 +183,7 @@ $img = base64_encode($foto_profilo);
               </div>
             </div>
             <div class="card-body">
-              <form method="POST" action="./yourprofile/yourprofile.php" onsubmit="return controllaNazioneorCitta();"
-                enctype="multipart/form-data">
+              <form method="POST" action="./yourprofile/yourprofile.php" enctype="multipart/form-data">
                 <h6 class="heading-small mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -232,7 +231,7 @@ $img = base64_encode($foto_profilo);
                           class="form-control form-control-alternative" placeholder="City" value=<?php echo $citta ? htmlspecialchars($citta) : ""; ?>>
                       </div>
                     </div>
-                    <?php echo "" ?>
+                    <?php echo ""?>
                     <div class="col-lg-6">
                       <div class="form-group focused">
                         <label class="form-control-label" for="input-country">Country</label>
@@ -244,13 +243,13 @@ $img = base64_encode($foto_profilo);
                 </div>
                 <hr />
                 <div class="container-fluid">
-                  <div class="col-lg-6 d-flex justify-content-starts">
-                    <div class="drop-zone">
-                      <span class="drop-zone__prompt">Drop your img here or click to upload</span>
-                      <input type="file" id="myFile" name="inputImage" class="drop-zone__input"
-                        accept=".jpeg, .jpg, .png" maxlength="2M" />
-                    </div>
+                <div class="col-lg-6 d-flex justify-content-starts">
+                  <div class="drop-zone">
+                    <span class="drop-zone__prompt">Drop your img here or click to upload</span>
+                    <input type="file" id="myFile" name="inputImage" class="drop-zone__input"
+                      accept=".jpeg, .jpg, .png" maxlength="2M"/>
                   </div>
+                </div>
                   <button type="submit" class="btn btn-outline-success float-right">Edit profile</button>
                 </div>
               </form>
@@ -301,7 +300,6 @@ $img = base64_encode($foto_profilo);
       </table>
     </div>
   </body>
-  <script src="./functions.js" type="application/javascript"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
