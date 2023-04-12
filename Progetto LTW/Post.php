@@ -24,7 +24,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
   <header>
     <div class="container p-0">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand my_brand" href="homepage.html">Museek.com</a>
+        <a class="navbar-brand my_brand" href="homepage.php">Museek.com</a>
         <button class="navbar-toggler ml-auto" id="bottone_toggle" value="NOT clicked" type="button"
           data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
           </ul>
         </div>
         <form action="" class="search-bar" id="search_bar">
-          <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" />
+          <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input"autocomplete="off"  onkeyup="showHint(this.value)" />
           <button type="submit" id="bottone_ricerca">
             <i class="fas fa-search"></i>
           </button>
@@ -57,25 +57,15 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
             aria-valuetext="Accedi Ora"></i></a>
       </nav>
       <div class="form_popup">
-        <form action="./login/login.php" method="POST" class="form-container" id="my_form">
-          <h1 class="my_h1">Login</h1>
-          <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="inputEmail" required />
-
-          <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="inputPassword" required />
-
-          <button type="submit" class="btn">Login</button>
-          <p class="messaggio">
-            Not registered? <a href="#">Create an account</a>
-          </p>
-          <p class="messaggio">
-            Password Forgotten? <a href="#">Click here</a>
-          </p>
+        <form action="./no-login/no-login.php" method="POST" class="form-container" name="logout_ema" id="my_form">
+          <button type="submit" class="btn">Log Out</button>
         </form>
       </div>
     </div>
   </header>
+  <div class="search-results container-fluid d-flex align-items-center justify-content-end" style="color: black;">
+    <div id="search_results" class="d-flex align-items-center"></div>
+  </div>
   <div class="header_page header pt-5 pt-lg-8 d-flex align-items-center" style="
         min-height: 500px;
         background-image: url(./images/WallpaperDog-20353053.jpg);
@@ -151,7 +141,7 @@ if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
               <hr class="my-4" />
               <div class="container-fluid">
                 <button type="submit" class="btn btn-outline-success float-right">
-                  Edit profile
+                  Create Article
                 </button>
               </div>
           </form>

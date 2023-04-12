@@ -35,7 +35,7 @@
                             <a class="nav-link" href="archive.php">Latest News</a>
                         </li>
                         <li class="nav-item my_nav-item">
-                            <a class="nav-link" href="Post.html">For You</a>
+                            <a class="nav-link" href="Post.php">For You</a>
                         </li>
                         <li class="nav-item my_nav-item">
                             <a class="nav-link" href="YourProfile.php">Your Profile</a>
@@ -46,7 +46,7 @@
                     </ul>
                 </div>
                 <form action="" class="search-bar" id="search_bar">
-                    <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" />
+                    <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" autocomplete="off"  onkeyup="showHint(this.value)" />
                     <button type="submit" id="bottone_ricerca">
                         <i class="fas fa-search"></i>
                     </button>
@@ -58,7 +58,7 @@
             <div class="form_popup">
                 <?php if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                     echo "
-                <form action=\"./login/login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
+                <form action=\"./login/login.php\" method=\"POST\" class=\"form-container\" name='login_ema' id=\"my_form\">
                     <h1 class=\"my_h1\">Login</h1>
                     <label for=\"email\"><b>Email</b></label>
                     <input type=\"text\" placeholder=\"Enter Email\" name=\"inputEmail\" required />
@@ -75,7 +75,7 @@
                     </p>
                 </form>";
                 } else {
-                    echo "<form action=\"./no-login/no-login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
+                    echo "<form action=\"./no-login/no-login.php\" method=\"POST\" class=\"form-container\" name='logout_ema' id=\"my_form\">
                     <button type=\"submit\" class=\"btn\">Log Out</button>
                   </form>";
                 }
@@ -83,6 +83,9 @@
             </div>
         </div>
     </header>
+    <div class="search-results container-fluid d-flex align-items-center justify-content-end" style="color: black;">
+    <div id="search_results" class="d-flex align-items-center"></div>
+  </div>
     <div class="container">
         <div class="header_page header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
           min-height: 500px;

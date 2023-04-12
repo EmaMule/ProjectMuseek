@@ -8,9 +8,11 @@ include "../connection.php";
 //variabile per far capire al db quali commenti deve prendere (se i primi 10, i secondi 10 etc...)
 //NB bisogna applicare un accorgimento: se l'offset inizia da 0 trigger comunque isset o !
 //quindi si inizia da 1 e nel php ogni volta si usa l'indice decrementato di 1
-if(!$_SESSION['indice-commenti']){
-    $_SESSION["indice-commenti"] = 1;
-}
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) && empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+    unset($_SESSION['indice-commenti']);
+    $_SESSION['indice-commenti'] = 1;
+  }
+
 
 //controllo per refresh manuale
 
@@ -103,7 +105,7 @@ $incdec = 1;
                         </ul>
                     </div>
                     <form action="" class="search-bar" id="search_bar">
-                        <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" />
+                        <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" autocomplete="off"  onkeyup="showHint(this.value)" />
                         <button type="submit" id="bottone_ricerca">
                             <i class="fas fa-search"></i>
                         </button>
@@ -113,33 +115,15 @@ $incdec = 1;
                             aria-hidden="false" aria-valuetext="Accedi Ora"></i></a>
                 </nav>
                 <div class="form_popup">
-                    <?php if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
-                        echo "
-                    <form action=\"../login/login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
-                        <h1 class=\"my_h1\">Login</h1>
-                        <label for=\"email\"><b>Email</b></label>
-                        <input type=\"text\" placeholder=\"Enter Email\" name=\"inputEmail\" required />
-
-                        <label for=\"psw\"><b>Password</b></label>
-                        <input type=\"password\" placeholder=\"Enter Password\" name=\"inputPassword\" required />
-
-                        <button type=\"submit\" class=\"btn\">Login</button>
-                        <p class=\"messaggio\">
-                            Not registered? <a href=\"../login.html\">Create an account</a>
-                        </p>
-                        <p class=\"messaggio\">
-                            Password Forgotten? <a href=\"#\">Click here</a>
-                        </p>
-                    </form>";
-                    } else {
-                        echo "<form action=\"../no-login/no-login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
-                        <button type=\"submit\" class=\"btn\">Log Out</button>
-                    </form>";
-                    }
-                    ?>
-                </div>
+        <form action="./no-login/no-login.php" method="POST" class="form-container" name="logout_ema" id="my_form">
+          <button type="submit" class="btn">Log Out</button>
+        </form>
+      </div>
             </div>
         </header>
+        <div class="search-results container-fluid d-flex align-items-center justify-content-end" style="color: black;">
+    <div id="search_results" class="d-flex align-items-center"></div>
+                </div>
         <!--POST-->
         <div class="container container_articolo">
             <div class="row">
@@ -158,11 +142,13 @@ $incdec = 1;
                     $titolo
                     ";?>
                 </header>
+                <hr class="my_divisore">
                 <div class="wrapper-immagine">
                 <?php echo "
                     <img class='media_articolo' src='data:image/jpg;charset=utf8;base64,$media'> 
                 ";?>
                 </div>
+                <hr class="my_divisore">
                 <?php echo "
                     <p class='testo_articolo'>$descrizione</p>
                 ";?>
@@ -220,7 +206,7 @@ $incdec = 1;
             crossorigin="anonymous"></script>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <script src="../metodi.js"></script>
+        <script src="./metodi.js" defer></script>
         <script>
             function LikeUpdate(id,autore,utente){
                 //incdec è il modo di far comunicare js con il php
@@ -340,59 +326,114 @@ $incdec = 1;
                         const ora = commento['ora'];
                         const foto = commento['foto_utente'];
 
-                        const box_commento = document.createElement("li");
-                        box_commento.classList.add("container");
-                        box_commento.classList.add("commento-container");
-                        const img = document.createElement("img");
-                        img.src = 'data:image/jpeg;charset=utf8;base64,'+foto;
-                        img.classList.add("commento-img");
-                        const name = document.createElement("header");
-                        name.classList.add("commento-username");
-                        const row = document.createElement("div");
-                        row.classList.add("row");
-                        const row2 = document.createElement("div");
-                        row2.classList.add("row");
-                        const row3 = document.createElement("div");
-                        row3.classList.add("row");
-
-                        //creiamo gli elementi di testo veri e propri dalle stringhe
-                        const textnode = document.createTextNode(text);
-                        const usernametextnode = document.createTextNode(username);
-                        name.appendChild(usernametextnode);
-                        const dataNode = document.createTextNode(data);
-                        const oraNode = document.createTextNode('  '+ora);
-
-                        box_commento.appendChild(row);
-                        row.appendChild(img);
-                        row.appendChild(name);
-                        box_commento.appendChild(row2);
-                        row2.appendChild(textnode);
-                        box_commento.appendChild(row3);
-                        row3.appendChild(dataNode);
-                        row3.appendChild(oraNode);
-                        row3.classList.add("commento-3rd-row");
-
-                        //infine inseriamo il commento 
-                        document.getElementById("list-comments").appendChild(box_commento);
-                        i += 1;
-
                         //controlliamo se il commento è dell'utente che lo sta guardando e inseriamo il delete button
                         const controllo = '<?php echo $_SESSION['username']; ?>';
+
                         if(controllo === username){
                             const id_com = commento['id_com'];
-                            const row4 = document.createElement("div");
-                            row4.classList.add('row');
-                            const btn = document.createElement("button");
-                            btn.classList.add("btn");
-                            btn.classList.add("btn-danger");
-                            btn.innerText = 'X';
-                            btn.setAttribute('id',id_com);
-                            row4.appendChild(btn);
-                            btn.addEventListener('click',function(e){
-                                cancellaCommento(e);
+                            var fai = true;
+                            const _lista = document.getElementById('list-comments');
+                            _lista.childNodes.forEach(li => {
+                                const last_row = li.lastChild;
+                                var delete_btn;
+                                if(last_row){
+                                    delete_btn = last_row.firstChild;}
+                                if(delete_btn && id_com === delete_btn.getAttribute('id')){
+                                    fai = false;
+                                    i += 1;
+                                //se il commento è stato creato non lo ricreo con show comments
+                                }
                             });
-                            box_commento.appendChild(row4);
+                            if(fai){
+                                const box_commento = document.createElement("li");
+                                box_commento.classList.add("container");
+                                box_commento.classList.add("commento-container");
+                                const img = document.createElement("img");
+                                img.src = 'data:image/jpeg;charset=utf8;base64,'+foto;
+                                img.classList.add("commento-img");
+                                const name = document.createElement("header");
+                                name.classList.add("commento-username");
+                                const row = document.createElement("div");
+                                row.classList.add("row");
+                                const row2 = document.createElement("div");
+                                row2.classList.add("row");
+                                const row3 = document.createElement("div");
+                                row3.classList.add("row");
+
+                                //creiamo gli elementi di testo veri e propri dalle stringhe
+                                const textnode = document.createTextNode(text);
+                                const usernametextnode = document.createTextNode(username);
+                                name.appendChild(usernametextnode);
+                                const dataNode = document.createTextNode(data);
+                                const oraNode = document.createTextNode('  '+ora);
+
+                                box_commento.appendChild(row);
+                                row.appendChild(img);
+                                row.appendChild(name);
+                                box_commento.appendChild(row2);
+                                row2.appendChild(textnode);
+                                box_commento.appendChild(row3);
+                                row3.appendChild(dataNode);
+                                row3.appendChild(oraNode);
+                                row3.classList.add("commento-3rd-row");
+
+                                const row4 = document.createElement("div");
+                                row4.classList.add('row');
+                                const btn = document.createElement("button");
+                                btn.classList.add("btn");
+                                btn.classList.add("btn-danger");
+                                btn.innerText = 'X';
+                                btn.setAttribute('id',id_com);
+                                row4.appendChild(btn);
+                                btn.addEventListener('click',function(e){
+                                    cancellaCommento(e);
+                                });
+                                box_commento.appendChild(row4);
+
+                                //infine inseriamo il commento 
+                                document.getElementById("list-comments").appendChild(box_commento);
+                                i += 1;
+                            }
                         }
+                        else{
+
+                            const box_commento = document.createElement("li");
+                            box_commento.classList.add("container");
+                            box_commento.classList.add("commento-container");
+                            const img = document.createElement("img");
+                            img.src = 'data:image/jpeg;charset=utf8;base64,'+foto;
+                            img.classList.add("commento-img");
+                            const name = document.createElement("header");
+                            name.classList.add("commento-username");
+                            const row = document.createElement("div");
+                            row.classList.add("row");
+                            const row2 = document.createElement("div");
+                            row2.classList.add("row");
+                            const row3 = document.createElement("div");
+                            row3.classList.add("row");
+
+                            //creiamo gli elementi di testo veri e propri dalle stringhe
+                            const textnode = document.createTextNode(text);
+                            const usernametextnode = document.createTextNode(username);
+                            name.appendChild(usernametextnode);
+                            const dataNode = document.createTextNode(data);
+                            const oraNode = document.createTextNode('  '+ora);
+
+                            box_commento.appendChild(row);
+                            row.appendChild(img);
+                            row.appendChild(name);
+                            box_commento.appendChild(row2);
+                            row2.appendChild(textnode);
+                            box_commento.appendChild(row3);
+                            row3.appendChild(dataNode);
+                            row3.appendChild(oraNode);
+                            row3.classList.add("commento-3rd-row");
+
+                            //infine inseriamo il commento 
+                            document.getElementById("list-comments").appendChild(box_commento);
+                            i += 1;
+                        }
+    
                     }
                 });
             }

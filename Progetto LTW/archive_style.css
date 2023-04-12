@@ -11,13 +11,11 @@
   width: 100%;
   margin-top: 50px;
   height: 405px;
-  background-image: url("images/archive-banner.jpg");
   background-position: center;
 }
 
 .body_top_g {
   background-color: rgb(233, 233, 233);
-  animation: change-color-anim 180s linear infinite;
 }
 
 @keyframes change-color-anim {
@@ -36,7 +34,7 @@
 }
 
 .article_user_text_top_g {
-  width: 30%;
+  width: 100%;
 }
 
 .article_little_icon_top_g {
@@ -65,6 +63,7 @@
 
 .article_ul_top_g {
   list-style-type: none;
+  padding: 0;
 }
 
 .article_text_top_g {
@@ -79,8 +78,8 @@
 }
 
 .article_img_top_g {
-  width: 380px;
-  height: 200px;
+  width: 60%;
+  height: 100%;
   border-radius: 2em;
   transition: 0.3s ease-in-out;
 }
@@ -93,14 +92,21 @@
   display: flex;
   justify-content: left;
   align-items: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 4;
   flex-direction: column;
   color: rgb(31, 30, 30);
   font-size: 2.4em;
+}
+.article_heading_top_g:hover {
+  color: rgb(88, 88, 88);
 }
 
 .arrow_icons_top_g {
   position: relative;
   display: flex;
+  padding: 0;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -128,10 +134,13 @@
     height: 120px;
   }
 }
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 500px) {
   .article_img_top_g {
     width: 200px;
     height: 100px;
+  }
+  .article_heading_top_g {
+    font-size: 30px;
   }
 }
 
@@ -146,54 +155,19 @@
 }
 
 .archive_img_top_g {
-  width: 226px;
-  height: 360px;
+  position: relative;
+  width: 90%;
+  height: 60%;
   border-radius: 1em;
   transition: 0.3s;
 }
-
-@media screen and (max-width: 451px) {
-  .archive_text_top_g {
-    font-size: small;
-  }
+hr {
+  width: 100%;
 }
-
-@media screen and (max-width: 768px) {
-  .header_tag_top_g {
-    font-size: 1.2em;
-  }
+.article_user_text_top_g a {
+  text-decoration: none;
 }
-
-@media screen and (max-width: 504px) {
-  .header_tag_top_g {
-    font-size: 1em;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .archive_img_top_g {
-    width: 192px;
-    height: 312px;
-  }
-}
-
-@media screen and (max-width: 990px) {
-  .archive_img_top_g {
-    width: 120px;
-    height: 190px;
-  }
-}
-
-@media screen and (max-width: 772px) {
-  .archive_img_top_g {
-    width: 80px;
-    height: 100px;
-  }
-}
-
-@media screen and (max-width: 528px) {
-  .archive_img_top_g {
-    width: 60px;
-    height: 90px;
-  }
+.container-title a {
+  text-decoration: none;
+  color: aquamarine;
 }

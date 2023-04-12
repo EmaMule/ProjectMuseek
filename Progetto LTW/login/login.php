@@ -3,19 +3,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: ../login.html");
 }
 include "../connection.php";
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-</head>
-
-<body>
-    <?php
     $email = $_POST["inputEmail"];
     $password = $_POST["inputPassword"];
     $query = "SELECT * from utente where email=$1;"; //Lo si fa per motivi di sicurezza. Con query_params sostituiamo ad 1 il valore corretto.
@@ -23,7 +10,10 @@ include "../connection.php";
 
     if ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) { 
         if($line["password"] != $password){
-            echo "La password non è corretta. Clicca <a href=\"../login.html\">qui </a> per riprovare";
+            $message_error="La password non è corretta.";
+            echo json_encode(array("error"=>$message_error));
+            pg_close($dbconn);
+            return;
         }
         else{
             session_start();
@@ -31,14 +21,16 @@ include "../connection.php";
             $_SESSION["email"] = $email;
             $username = $line["username"];
             $_SESSION["username"] = $username;
-            header("Location:../YourProfile.php");
+            $message_success="SUCCESS";
+            echo json_encode(array("success"=>$message_success));
+            return;
         }
         
     } else {
-        echo $email . "L'indirizzo email non appartiene a nessun utente registrato. Clicca <a href=\"../login.html\">qui </a> per registrarti";
+        $message_error="L'indirizzo email non appartiene a nessun utente registrato.";
+        echo json_encode(array("error"=>$message_error));
+        pg_close($dbconn);
+        return;
     }
     pg_close($dbconn);
     ?>
-</body>
-
-</html>

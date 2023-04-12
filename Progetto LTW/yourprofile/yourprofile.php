@@ -1,18 +1,6 @@
 <?php
-include "../connection.php";
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-</head>
-
-<body>
-    <?php
+    include "../connection.php";
+    session_start();
     $email = $_POST["inputEmail"];
     $query = "SELECT * from utente where email=$1;"; //Lo si fa per motivi di sicurezza. Con query_params sostituiamo ad 1 il valore corretto.
     $result = pg_query_params($dbconn, $query, array($email));
@@ -23,8 +11,8 @@ include "../connection.php";
         $query2 = "UPDATE utente SET nome=$1, cognome=$2, citta=$3, nazione=$4, username=$5, foto_profilo=$6 WHERE email=$7;";
         $nome = $_POST["inputName"];
         $cognome = $_POST["inputCognome"];
-        $citta = $_POST["inputCitta"];
-        $nazione = $_POST["inputNazione"];
+        $citta = ($_POST["inputCitta"]=="")?null:$_POST["inputCitta"];
+        $nazione = ($_POST["inputNazione"]=="")?null:$_POST["inputNazione"];
         $username = $_POST["inputUsername"];
         if(isset($_FILES['inputImage']['tmp_name'])&&is_uploaded_file($_FILES['inputImage']['tmp_name'])){
             $image = file_get_contents($_FILES['inputImage']['tmp_name']);
@@ -38,17 +26,17 @@ include "../connection.php";
             $query3 = "SELECT * from utente where username=$1;";
             $result_1 = pg_query_params($dbconn, $query3, array($username));
             if (($linea = pg_fetch_array($result_1, null, PGSQL_ASSOC))) {
-                echo "Username già usato Clicca <a href=\"../YourProfile.php\">qui </a> per riprovare";
+                $error_message = array("error" => "USERNAME UTILIZZATO");
+                echo json_encode($error_message);
                 return;
             } else {
-                $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username, $email,base64_encode($image)));
+                $result = pg_query_params($dbconn, $query2, array($nome, $cognome, $citta, $nazione, $username,base64_encode($image),$email));
+                $_SESSION["username"]=$username;
             }
         }
-        header("Location:../YourProfile.php");
     }
+    header('Content-Type: application/json');
+    echo json_encode(array("success"=>"SUCCESSO"));
     pg_close($dbconn);
 
-    ?>
-</body>
-
-</html>
+?>

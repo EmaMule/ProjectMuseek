@@ -30,17 +30,55 @@ function mostraRegister() {
   form_log.style.display = "none";
   form_sign.style.display = "flex";
 }
-const loginButton = document.getElementById("btn-login");
-const loginForm = document.getElementById("login-form");
-const registerButton = document.getElementById("btn-register");
-const registerForm = document.getElementById("register-form");
-loginButton.addEventListener("click", () => {
-  console.log("ok qua è partito");
-  console.log(loginForm);
-  window.scrollIntoView({ behavior: "smooth", block: "center" });
+const LoginForm = document.querySelector("#LoginForm");
+const RegisterForm = document.querySelector("#RegisterForm");
+
+LoginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(LoginForm);
+  const response = await fetch("./login/login.php", {
+    method: "POST",
+    body: formData,
+  });
+  if (response.ok) {
+    const data = await response.json(); // ottieni il contenuto della risposta come oggetto JSON
+    if (data.error) {
+      // gestisci l'errore
+      alert("Error: " + data.error);
+    } else {
+      // la risposta non contiene errori, esegui altre operazioni
+      window.location.href = "YourProfile.php";
+    }
+  } else {
+    // la città o il paese inserito non esiste
+    alert("ERROR RESPONSE");
+  }
 });
-registerButton.addEventListener("click", () => {
-  console.log("ok qua è partito");
-  console.log(loginForm);
-  window.scrollIntoView({ behavior: "smooth", block: "center" });
+RegisterForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (
+    document.getElementById("password").value !==
+    document.getElementById("confirm-password").value
+  ) {
+    alert("PASSWORD NON CONINCIDONO");
+    return;
+  }
+  const formData = new FormData(RegisterForm);
+  const response = await fetch("./register/register.php", {
+    method: "POST",
+    body: formData,
+  });
+  if (response.ok) {
+    const data = await response.json(); // ottieni il contenuto della risposta come oggetto JSON
+    if (data.error) {
+      // gestisci l'errore
+      alert("Error: " + data.error);
+    } else {
+      // la risposta non contiene errori, esegui altre operazioni
+      window.location.href = "YourProfile.php";
+    }
+  } else {
+    // la città o il paese inserito non esiste
+    alert("ERROR RESPONSE");
+  }
 });

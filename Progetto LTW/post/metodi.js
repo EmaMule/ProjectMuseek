@@ -105,7 +105,7 @@ function showHint(str) {
         showResults(results);
       }
     };
-    xmlhttp.open("GET", "gethint.php?q=" + str, true);
+    xmlhttp.open("GET", "../gethint.php?q=" + str, true);
     xmlhttp.send();
   }
 }
@@ -146,7 +146,7 @@ if (LoginFormEma.length != 0) {
   LoginFormEma.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(LoginFormEma);
-    const response = await fetch("./login/login.php", {
+    const response = await fetch("../login/login.php", {
       method: "POST",
       body: formData,
     });
@@ -157,7 +157,7 @@ if (LoginFormEma.length != 0) {
         alert("Error: " + data.error);
       } else {
         // la risposta non contiene errori, esegui altre operazioni
-        window.location.href = "YourProfile.php";
+        window.location.href = "../YourProfile.php";
       }
     } else {
       // la città o il paese inserito non esiste
@@ -169,7 +169,7 @@ if (LoginFormEma.length != 0) {
   LogoutFormEma.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(LogoutFormEma);
-    const response = await fetch("./no-login/no-login.php", {
+    const response = await fetch("../no-login/no-login.php", {
       method: "POST",
       body: formData,
     });
@@ -181,7 +181,7 @@ if (LoginFormEma.length != 0) {
         alert("Error: " + data.error);
       } else {
         // la risposta non contiene errori, esegui altre operazioni
-        window.location.href = "YourProfile.php";
+        window.location.href = "../YourProfile.php";
       }
     } else {
       // la città o il paese inserito non esiste

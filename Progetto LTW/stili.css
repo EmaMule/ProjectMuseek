@@ -182,3 +182,29 @@
 .header_page {
   height: 10%;
 }
+.search-results {
+  position: fixed;
+  right: 100px;
+  top: 60px;
+  margin: 0;
+  z-index: 1;
+}
+#search_results #mioid {
+  list-style-type: none;
+}
+#search_results li {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-family: sans-serif;
+}
+.img_searchbar {
+  width: 50px;
+  height: 50px;
+  aspect-ratio: 16/10;
+}
+.titolo_searchbar {
+  margin-left: 10px;
+}

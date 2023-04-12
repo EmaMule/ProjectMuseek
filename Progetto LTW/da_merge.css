@@ -29,7 +29,7 @@
 
 .card_paragraph_top_g {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   max-height: 11.5rem;
   font-size: medium;
   line-height: 2.2rem;
@@ -38,7 +38,12 @@
   text-overflow: ellipsis;
   text-size-adjust: auto;
 }
-
+.nomi_utente {
+  text-decoration: none !important; /* da cambiare*/
+  color: solid black;
+  font-weight: 500;
+  border-radius: 10px;
+}
 .card_top_left_g {
   border-top-left-radius: 1rem;
 }
@@ -63,7 +68,9 @@
 }
 
 .text_in_card_top_g {
-  font-size: larger;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 2.4em;
 }
 .scene_top_g {
   left: 10em;
@@ -104,7 +111,19 @@
 .carousel__cell_top_g:nth-child(4) {
   transform: translateY(-45em) rotateY(270deg) translateZ(10em);
 }
-
+.my_image {
+  object-fit: cover;
+}
+.carousel {
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 16/9;
+}
+.carousel-item img {
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 16/9; /* set a fixed aspect ratio for the images */
+}
 .card_cube_top_g {
   display: -webkit-box;
   width: 20em;
@@ -114,17 +133,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   border-color: aliceblue;
+  border-radius: 16px;
   border-style: ridge;
   text-size-adjust: auto;
 }
-
 .card_cube_text_top_g {
   font-size: larger;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 6;
 }
 
 .img_cube_top_g {

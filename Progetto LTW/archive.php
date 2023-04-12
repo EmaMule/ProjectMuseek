@@ -1,23 +1,30 @@
 <?php 
 session_start();
 include "./connection.php";
-unset($_SESSION['indice-commenti']);
 
-$count_pagine = 1;
+if (!isset($_SESSION['indice-paginazione'])) {
+    $_SESSION['indice-paginazione'] = 0;
+  }
 
-$query = "SELECT * from articolo left join media_articolo on articolo.id=media_articolo.id_articolo order by id desc
-         limit 5;";
-$result = pg_query($dbconn, $query);
+//OTTENIAMO L'OFFSET PER LA QUERY
+$index = $_SESSION['indice-paginazione'] * 10;
+
+//prepariamo query per forward o backward
+$query = 'SELECT id, username, foto_profilo, nome, 
+    contenuto, descrizione, titolo,
+    data, ora, numlikes 
+    from articolo_con_username_e_media 
+    order by id DESC
+    offset $1
+    fetch first 10 row only;';
+
+$result = pg_query_params($dbconn, $query, array($index));
 
 if(!$result){
     echo "An error has occurred whilst loading the articles!";
     exit;
 }
-
-
-
-
-
+echo $_SESSION['indice-paginazione'];
 
 ?>
 
@@ -31,7 +38,6 @@ if(!$result){
     <title>MusicNews</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-    <link rel="stylesheet" href="da_merge.css" />
     <link rel="stylesheet" href="stili.css" />
     <link rel="stylesheet" href="archive_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
@@ -68,7 +74,7 @@ if(!$result){
                     </ul>
                 </div>
                 <form action="" class="search-bar" id="search_bar">
-                    <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" />
+                    <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" autocomplete="off"  onkeyup="showHint(this.value)"/>
                     <button type="submit" id="bottone_ricerca">
                         <i class="fas fa-search"></i>
                     </button>
@@ -80,25 +86,25 @@ if(!$result){
             <div class="form_popup">
                 <?php if (!isset($_SESSION["loggedinusers"]) || $_SESSION["loggedinusers"] != true) {
                     echo "
-                <form action=\"./login/login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
-                    <h1 class=\"my_h1\">Login</h1>
-                    <label for=\"email\"><b>Email</b></label>
-                    <input type=\"text\" placeholder=\"Enter Email\" name=\"inputEmail\" required />
+                <form action='./login/login.php' method='POST' class='form-container' name='login_ema' id='my_form'>
+                    <h1 class='my_h1'>Login</h1>
+                    <label for='email'><b>Email</b></label>
+                    <input type='text' placeholder='Enter Email' name='inputEmail' required />
 
-                    <label for=\"psw\"><b>Password</b></label>
-                    <input type=\"password\" placeholder=\"Enter Password\" name=\"inputPassword\" required />
+                    <label for='psw'><b>Password</b></label>
+                    <input type='password' placeholder='Enter Password' name='inputPassword' required />
 
-                    <button type=\"submit\" class=\"btn\">Login</button>
-                    <p class=\"messaggio\">
-                        Not registered? <a href=\"login.html\">Create an account</a>
+                    <button type='submit' class='btn'>Login</button>
+                    <p class='messaggio'>
+                        Not registered? <a href='login.html'>Create an account</a>
                     </p>
-                    <p class=\"messaggio\">
-                        Password Forgotten? <a href=\"#\">Click here</a>
+                    <p class='messaggio'>
+                        Password Forgotten? <a href='#'>Click here</a>
                     </p>
                 </form>";
                 } else {
-                    echo "<form action=\"./no-login/no-login.php\" method=\"POST\" class=\"form-container\" id=\"my_form\">
-                    <button type=\"submit\" class=\"btn\">Log Out</button>
+                    echo "<form action='./no-login/no-login.php' method='POST' class='form-container' name='logout_ema' id='my_form'>
+                    <button type='submit' class='btn'>Log Out</button>
                   </form>";
                 }
                 ?>
@@ -106,6 +112,9 @@ if(!$result){
         </div>
     </header>
     <!--FINE NAVBAR-->
+    <div class="search-results container-fluid d-flex align-items-center justify-content-end" style="color: black;">
+    <div id="search_results" class="d-flex align-items-center"></div>
+  </div>
     <!--BODY-->
     <div class="header_page header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
         min-height: 450px;
@@ -130,55 +139,47 @@ if(!$result){
     </div>
     <!--FINE BANNER-->
     <div class="container">
-        <div class="row">
-            <div class="col-1">
-
-            </div>
-            <div class="col-10">
+        <div class="row d-flex container-fluid justify-content-center">
+            <div class="col-9 flex-grow-2">
                 <ul class="article_ul_top_g">
                 <?php 
                         while($line = pg_fetch_array($result, null, PGSQL_ASSOC)){
                             $id = $line["id"];
-                            $utente = $line["utente"];
+                            $username = $line["username"];
                             $titolo = $line["titolo"];
                             $descrizione = $line["descrizione"];
                             $numlikes = $line["numlikes"];
-                            
-                            $query2 = "SELECT username, foto_profilo from utente where email=$1;";
-                            $res = pg_query_params($dbconn,$query2,array($utente));
-                            $line2 = pg_fetch_array($res,null,PGSQL_ASSOC);
-                            $username = $line2["username"];
-                            $foto_profilo = $line2["foto_profilo"];
-                            
-                            $query3 = "SELECT * from media_articolo where id_articolo=$1;";
-                            $result3 = pg_query_params($dbconn,$query3,array($id));
-                            $line3 = pg_fetch_array($result3,null,PGSQL_ASSOC);
-                            $media = $line3["contenuto"] ?? null;
+                            $data = $line['data'];
+                            $ora = $line['ora'];
 
-                            if(!isset($media)){
-                                $media = file_get_contents("images/article-img-placeholder.jpg");
-                                $media = base64_encode($media);
-                            }
-                            else{
-                                $media = (pg_unescape_bytea($media));
-                            }
+                            $foto_profilo = $line['foto_profilo'];
                             $foto_profilo = (pg_unescape_bytea($foto_profilo));
+
+                            $media = $line['contenuto'];
+                            $media = pg_unescape_bytea($media);
 
                               echo"
 
                               <li class='article_top_g article_container_top_g' id='article-0'>
-                                <a href='#'>
+                                <div class='container d-flex container-fluid flex-wrap align-items-start'>
                                     <header class='h5 article_user_text_top_g'>
+                                    <a href='#'>
                                         <img class='article_little_icon_top_g' src='data:image/jpg;charset=utf8;base64,$foto_profilo'> $username
+                                    </a>
                                     </header>
-
-                                </a>
+                                </div>
+                                <hr>
+                                <div class='container d-flex justify-content-start container-title'>
                                 <a href='./post/post_view.php?article=$id'>
                                     <header class='h3 article_heading_top_g'>
                                         $titolo
                                     </header>
                                 </a>
+                                </div>
+                                <div class='container d-flex justify-content-center mb-2 mt-2'>
                                 <img src='data:image/jpg;charset=utf8;base64,$media' class='article_img_top_g' />
+                                </div>
+                                <hr>
                                 <p class='p-1 article_text_top_g'>
                                     $descrizione
                                 </p>
@@ -191,36 +192,35 @@ if(!$result){
 
                 
                 </ul>
-            </div>
-            <div class="col-1">
-
+            <ul class="arrow_icons_top_g">
+            <li>
+                <a><ion-icon name="play-back-circle-outline" onclick="backwardBackward();"></ion-icon></ion-icon></a>
+            </li>
+            <li>
+                <a><ion-icon name="caret-back-circle-outline" onclick="backward();"></ion-icon></a>
+            </li>
+            <li>
+                <a><ion-icon name="caret-forward-circle-outline" onclick="forward();"></ion-icon></a>
+            </li>
+            <li>
+                <a><ion-icon name="play-forward-circle-outline" onclick="forwardForward();"></ion-icon></a>
+            </li>
+            </ul>
             </div>
         </div>
     </div>
     <!--FINE CARRELLATA ARTICOLI-->
 
     <div class="container-fluid">
-        <ul class="arrow_icons_top_g">
-            <li>
-                <a href="#"><ion-icon name="play-back-circle-outline"></ion-icon></ion-icon></a>
-            </li>
-            <li>
-                <a href="#"><ion-icon name="caret-back-circle-outline"></ion-icon></a>
-            </li>
-            <li>
-                <a href="#"><ion-icon name="caret-forward-circle-outline"></ion-icon></a>
-            </li>
-            <li>
-                <a href="#"><ion-icon name="play-forward-circle-outline"></ion-icon></a>
-            </li>
-        </ul>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-                <div class="container margin_divider">
+    <div class="container container-fluid">
+        <div class="row d-flex align-items-md-vertical">
+            <div class="col-md">
+                <div class="container container-fluid margin_divider">
                     <header class="h3 header_tag_top_g">WHAT IS THE ARCHIVE</header>
+                    <div class="container container-fluid d-flex justify-content-center">
                     <img src="images/archive-img-0.jpg" class="archive_img_top_g">
+                    </div>
                     <p class="archive_text_top_g">The archive is the place where you can access all of our user's
                         blogposts!
                         If you publish a blogpost or a newsletter users will be able to access it from the archive. If
@@ -231,36 +231,29 @@ if(!$result){
                     </p>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-md">
                 <div class="container margin_divider">
                     <header class="h3 header_tag_top_g">GET IN TOUCH WITH OTHERS</header>
+                    <div class="container container-fluid d-flex justify-content-center">
                     <img src="images/archive-img-2.jpg" class="archive_img_top_g">
+                    </div>
                     <p class="archive_text_top_g">Our blogposts are made from users from all around the world.
                         Broadcast yourself and share your passion! Comment on other
                         people blogposts and share your opinions! We are an open
-                        community of music enthusiasts and everyone is welcome!
+                        community of music enthusiasts and everyone is welcome! ora
                     </p>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-md">
                 <div class="container margin_divider">
                     <header class="h3 header_tag_top_g">SHARE YOUR PASSION</header>
+                    <div class="container container-fluid d-flex justify-content-center">
                     <img src="images/archive-img-1.jpg" class="archive_img_top_g">
+                    </div>
                     <p class="archive_text_top_g">Publish your music, get feedback from the community,
                         share your passion! Open now your personal blog and it'll end up in our archive.
-                        The only rule is that the posts must be about music topics!
-
-                    </p>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="container margin_divider">
-                    <header class="h3 header_tag_top_g">UPLOAD YOUR CONTENT</header>
-                    <img src="images/archive-img-3.jpg" class="archive_img_top_g">
-                    <p class="archive_text_top_g">Upload your personal content. Get
-                        feedback from other users and have everyone know how good you are.
-                        Guitar, piano, saxophone. every instrument is accepted! Play here your videos and your
-                        audios.
+                        The only rule is that the posts must be about music topics! Scrivo altre cose per capire come 
+                        siamo messi forza la magica roma! Forzissima la roma! Ci siamo ora credo, altezza perfetta. Altezzona perfettona! Forza dai!
 
                     </p>
                 </div>
@@ -268,9 +261,10 @@ if(!$result){
         </div>
     </div>
     <!--FINE BODY-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script
+			  src="https://code.jquery.com/jquery-3.6.4.min.js"
+			  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+			  crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -280,6 +274,8 @@ if(!$result){
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="./metodi.js"></script>
+    <script src='./archive.js'></script>
+    
 </body>
 
 </html>

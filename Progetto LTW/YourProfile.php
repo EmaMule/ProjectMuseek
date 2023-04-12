@@ -74,7 +74,7 @@ $img = pg_unescape_bytea($foto_profilo);
           </ul>
         </div>
         <form action="" class="search-bar" id="search_bar">
-          <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" />
+          <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" autocomplete="off"  onkeyup="showHint(this.value)" />
           <button type="submit" id="bottone_ricerca">
             <i class="fas fa-search"></i>
           </button>
@@ -84,13 +84,15 @@ $img = pg_unescape_bytea($foto_profilo);
             aria-valuetext="Accedi Ora"></i></a>
       </nav>
       <div class="form_popup">
-        <form action="./no-login/no-login.php" method="POST" class="form-container" id="my_form">
+        <form action="./no-login/no-login.php" method="POST" class="form-container" name="logout_ema" id="my_form">
           <button type="submit" class="btn">Log Out</button>
         </form>
       </div>
     </div>
   </header>
-
+  <div class="search-results container-fluid d-flex align-items-center justify-content-end" style="color: black;">
+    <div id="search_results" class="d-flex align-items-center"></div>
+  </div>
   <body>
     <div class="header_page header pt-5 pt-lg-8 d-flex align-items-center" style="
           min-height: 500px;
@@ -183,7 +185,7 @@ $img = pg_unescape_bytea($foto_profilo);
               </div>
             </div>
             <div class="card-body">
-              <form method="POST" action="./yourprofile/yourprofile.php" enctype="multipart/form-data">
+              <form method="POST" action="./yourprofile/yourprofile.php" enctype="multipart/form-data" id="myForm">
                 <h6 class="heading-small mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">

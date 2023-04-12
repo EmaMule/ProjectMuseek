@@ -65,6 +65,8 @@
               class="search-bar-text"
               placeholder="Search anything"
               id="Search_input"
+              autocomplete="off"
+              onkeyup="showHint(this.value)"
             />
             <button type="submit" id="bottone_ricerca">
               <i class="fas fa-search"></i>
@@ -84,7 +86,7 @@
           ></a>
         </nav>
         <div class="form_popup">
-          <form class="form-container" id="my_form">
+          <form class="form-container" id="my_form" name="login_ema">
             <h1 class="my_h1">Login</h1>
             <label for="email"><b>Email</b></label>
             <input
@@ -112,9 +114,20 @@
         </div>
       </div>
     </header>
+    <div
+      class="search-results container-fluid d-flex align-items-center justify-content-end"
+      style="color: black"
+    >
+      <div id="search_results" class="d-flex align-items-center"></div>
+    </div>
     <section class="forms">
       <div class="signup-box">
-        <form name="myForm" action="./register/register.php" method="POST">
+        <form
+          name="myForm"
+          id="RegisterForm"
+          action="./register/register.php"
+          method="POST"
+        >
           <h1>Signup</h1>
           <div class="box">
             <i class="fa-solid fa-signature"></i>
@@ -123,7 +136,7 @@
           </div>
           <div class="box">
             <i class="fa-solid fa-signature"></i>
-            <input type="text" class="cognome" name="inputCognome"  required />
+            <input type="text" class="cognome" name="inputCognome" required />
             <label>Last Name</label>
           </div>
           <div class="box">
@@ -133,20 +146,34 @@
           </div>
           <div class="box">
             <i class="fa-solid fa-envelope"></i>
-            <input type="email" name="inputEmail"  required />
+            <input type="email" name="inputEmail" required />
             <label>Email</label>
           </div>
           <div class="box">
             <i class="fa-solid fa-lock bx-hide"></i>
-            <input type="password" class="password" name="inputPassword"  required />
+            <input
+              id="password"
+              type="password"
+              class="password"
+              name="inputPassword"
+              required
+            />
             <label>Password</label>
           </div>
           <div class="box">
             <i class="fa-solid fa-lock bx-hide"></i>
-            <input type="password" class="password" name="inputConfirmPassword" required />
+            <input
+              id="confirm-password"
+              type="password"
+              class="password"
+              name="inputConfirmPassword"
+              required
+            />
             <label> Confirm Password</label>
           </div>
-          <button class="register-button" type="submit">Register</button>
+          <button class="register-button" type="submit" id="btn-register">
+            Register
+          </button>
           <div class="register-link">
             <p>
               You have an account?<a href="#" onclick="mostraLogin();">Login</a>
@@ -155,7 +182,7 @@
         </form>
       </div>
       <div class="form login-box">
-        <form action="./login/login.php" method="POST">
+        <form id="LoginForm" action="./login/login.php" method="POST">
           <h1>Login</h1>
           <div class="box">
             <i class="fa-solid fa-envelope"></i>
@@ -164,14 +191,21 @@
           </div>
           <div class="box">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" class="password" name="inputPassword" required />
+            <input
+              type="password"
+              class="password"
+              name="inputPassword"
+              required
+            />
             <label>Password</label>
           </div>
           <div class="remember-forgot">
             <label><input type="checkbox" />Remember me</label>
             <a href="#">Forgot Password?</a>
           </div>
-          <button class="register-button" type="submit">Login</button>
+          <button class="register-button" type="submit" id="btn-login">
+            Login
+          </button>
           <div class="register-link">
             <p>
               Don't have an account?<a href="#" onclick="mostraRegister();"
