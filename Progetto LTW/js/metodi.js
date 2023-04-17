@@ -293,3 +293,91 @@ if (LoginFormEma.length != 0) {
     }
   });
 }
+function showHint_post(str, id_articolo) {
+  if (str.length == 0) {
+    document.getElementById("search_results").innerHTML = "";
+    return;
+  } else {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var results = JSON.parse(this.responseText);
+        showResults_post(results);
+      }
+    };
+    xmlhttp.open(
+      "GET",
+      "../php-function/gethint_post.php?id_articolo=" +
+        id_articolo +
+        "&q=" +
+        str,
+      true
+    ); //DA VERIFICAREEEEEEEEEEEEEEEEEEEEEEEE
+    xmlhttp.send();
+  }
+}
+function showResults_post(results) {
+  var output = "<ul id='mioid'>";
+  if (results.length == 0) {
+    output += "<li> No result for User, Article and Comments </li> </ul>";
+  } else {
+    var countid = countOccurrences(results, "id");
+    output += "<li>Risultati Articoli </li>";
+    if (countid == 0) {
+      output += "<li>No result for Article </li>";
+    }
+    for (var i = 0; i < results.length; i++) {
+      if (results[i]["id"]) {
+        output +=
+          "<li><img class='img_searchbar' src='data:image/jpg;charset=utf8;base64," +
+          results[i]["immagine"] +
+          "'><span class='titolo_searchbar'><a href='../php-pagine/post_view.php?article=" +
+          results[i]["id"] +
+          "'>" +
+          results[i]["titolo"] +
+          "</a></span></li>";
+      }
+    }
+    var countuser = countOccurrences(results, "username");
+    output += "<li>Risultati User</li>";
+    if (countuser == 0) {
+      output += "<li>No result for User </li>";
+    }
+    for (var i = 0; i < results.length; i++) {
+      if (results[i]["username"]) {
+        output +=
+          "<li><img class='img_searchbar' src='data:image/jpg;charset=utf8;base64," +
+          results[i]["immagine"] +
+          "'><span class='titolo_searchbar'><a href=" +
+          "./profile_view.php?user=" +
+          results[i]["username"] +
+          ">" +
+          results[i]["username"] +
+          "</a></span></li>";
+      }
+    }
+    var countdescrizione = countOccurrences(results, "descrizione");
+    output += "<li>Risultati Comments</li>";
+    if (countdescrizione == 0) {
+      output += "<li>No result for Comments </li>";
+    }
+    for (var i = 0; i < results.length; i++) {
+      if (results[i]["descrizione"]) {
+        output +=
+          "<li><img class='img_searchbar' src='data:image/jpg;charset=utf8;base64," +
+          results[i]["immagine"] +
+          "'><span class='titolo_searchbar'><a style='cursor:pointer;' onclick='searchComment(" +
+          results[i]["commento_id"] +
+          ")'>" +
+          results[i]["user"] +
+          " " +
+          "says: " +
+          results[i]["descrizione"] +
+          "</a></span></li>";
+      }
+    }
+    output += "</ul>";
+  }
+  document.querySelector(".search-results").style.top = "60px";
+  document.getElementById("search_results").innerHTML = output;
+}

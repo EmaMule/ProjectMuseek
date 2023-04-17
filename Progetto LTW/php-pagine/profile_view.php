@@ -241,8 +241,75 @@ if ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
         </div>
       </div>
     </div>
+ 
 
-    </body>
+    <div class="container mt-5">
+      <h2>Articles</h2>
+      <div class="d-flex row">
+        <div class="col-md-12">
+          <div id='tabellaAppend'>
+            <!--prime righe della tabella(max 3) -->
+            <?php
+                $query_articles = 'SELECT * FROM articolo_con_username_e_media
+              WHERE email=$1 
+              order by id DESC 
+              offset 0
+              fetch first 9 rows only;';
+                $result_articles = pg_query_params($dbconn, $query_articles, array($email));
+                $i = 0;
+
+                while ($line = pg_fetch_array($result_articles, null, PGSQL_ASSOC)) {
+                  $media = pg_unescape_bytea($line['contenuto']);
+                  $titolo = $line['titolo'];
+                  $desc = $line['descrizione'];
+                  $id = $line['id'];
+                  $data = $line['data'];
+                  if ($i == 0 || $i == 3 || $i == 6) {
+                    echo "<div class='row'>";
+                  }
+                  echo "<div class='col-lg-4 mt-3 align-middle'>
+                      <div class='card'>
+                        <div class='container container-fluid d-flex img-fluid'>
+                          <img class='card-img-top article_imgs img-fluid' 
+                              src='data:image/jpeg;charset=utf8;base64,$media'>
+                         </div>
+                          <div class='card-body'>
+                            <div class='container container-fluid container_testi'>
+                              <div class='row'>
+                                <a href='./post_view.php?article=$id'>
+                                  <h5 class='card-title'>$titolo</h5>
+                                </a>
+                              </div>
+                              <div class='row'>
+                                <p class='card-text'>$desc</p>
+                              </div>
+                            </div>
+                            <div class='row justify-content-end'>
+                              <span>$data</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>";
+                  if ($i == 2 || $i == 5 || $i == 8) {
+                    echo "</div>";
+                  }
+                  $i += 1;
+
+                }
+                ?>
+            <!-- altre righe della tabella generate con ajax-->
+          </div>
+        </div>
+      </div>
+    
+    <div class="container-fluid" id="loading-modal" style="display:none;">
+    <div class="modal-content">
+      <div class="spinner"></div>
+    </div>
+    </div>
+  </div>
+
+  </body>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
@@ -253,6 +320,23 @@ if ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     crossorigin="anonymous"></script>
   <script src="../js/metodi.js"></script>
   <script src='../js/like_follow.js'></script>
+  <script src="../js/profileViewArticles.js"></script>
+  <script>
+    const loadingModal = document.getElementById('loading-modal');
+    window.addEventListener("scroll", () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    // Verifica se si è raggiunta la fine della pagina
+    if (scrollTop + clientHeight >= scrollHeight) {
+      loadingModal.style.display = 'block';
+      MostraArticoli('<?php echo $email?>').then(()=>{
+        loadingModal.style.display = 'none';
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+    });
+  </script>
 
 
 </html>

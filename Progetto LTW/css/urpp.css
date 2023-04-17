@@ -146,3 +146,6 @@ h6 {
     transform: rotate(360deg);
   }
 }
+.pallini {
+  cursor: pointer;
+}

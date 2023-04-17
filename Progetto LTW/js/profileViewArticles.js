@@ -1,4 +1,4 @@
-//NON IMPORTARE IN PROFILE VIEW! DA USARE SOLO PER YOUR PROFILE
+//FUNZIONE SOLO PER PROFILE VIEW! VARIANTE PER PROFILO ESTERNO DI MOSTRA ARTICOLI
 function MostraArticoli(email_user) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -14,7 +14,8 @@ function MostraArticoli(email_user) {
         .done(function (result) {
           result = JSON.parse(result);
           var i = 0;
-
+          //UGUALE ALL'ALTRA FUNZIONE MA SENZA DELETE OPTION PERCHE GUARD
+          //IL PROFILO DI QUALCUN ALTRO
           const tablerow1 = document.createElement("div");
           tablerow1.classList.add("row");
           const tablerow2 = document.createElement("div");
@@ -82,31 +83,6 @@ function MostraArticoli(email_user) {
             const dt = document.createElement("span");
             dt.appendChild(document.createTextNode(data));
             div.append(dt);
-
-            ///CREIAMO DELETE OPTION
-            const finalrow = document.createElement("div");
-            finalrow.classList.add("row");
-            const ion = document.createElement("ion-icon");
-            ion.setAttribute("name", "ellipsis-vertical");
-            ion.setAttribute("size", "large");
-            ion.setAttribute("data-toggle", "dropdown");
-
-            const iondiv = document.createElement("div");
-            iondiv.classList.add("dropdown-menu");
-            iondiv.setAttribute("aria-labelledby", "drdwn");
-            finalrow.appendChild(iondiv);
-
-            const ion_a = document.createElement("a");
-            ion_a.classList.add("dropdown-item", "delete-clickable");
-            ion_a.setAttribute("id", id);
-            ion_a.href = "#";
-            ion_a.appendChild(document.createTextNode("Delete"));
-            iondiv.appendChild(ion_a);
-
-            finalrow.appendChild(ion);
-            body.appendChild(finalrow);
-
-            //FINE
 
             if (i < 3) {
               tablerow1.appendChild(td);

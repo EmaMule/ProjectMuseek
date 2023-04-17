@@ -115,7 +115,7 @@ $incdec = 1;
                 </div>
                 <div class="search-bar" id="search_bar">
                     <input type="text" class="search-bar-text" placeholder="Search anything" id="Search_input" autocomplete="off"
-                        onkeyup="showHint(this.value)" />
+                        onkeyup="showHint_post(this.value,'<?php echo $id?>')" />
                     <button  id="bottone_ricerca">
                         <i class="fas fa-search"></i>
                     </button>
@@ -211,7 +211,7 @@ $incdec = 1;
                 $data = $line['data'];
                 $ora = $line['ora'];
                 $id_commento = $line['id'];
-                echo "<li class='container commento-container'>
+                echo "<li class='container commento-container' id='s$id_commento'>
                             <div class='row'>
                                 <img class='commento-img' src='data:image/jpeg;charset=utf8;base64,$media'>
                                 <header class='commento-username'>$username</header>
@@ -293,6 +293,7 @@ $incdec = 1;
 
 
                     const box_commento = document.createElement("li");
+                    box_commento.id="s"+id_com;
                     box_commento.classList.add("container");
                     box_commento.classList.add("commento-container");
                     const img = document.createElement("img");
@@ -372,12 +373,12 @@ $incdec = 1;
                             const data = commento['data'];
                             const ora = commento['ora'];
                             const foto = commento['foto_utente'];
+                            const id_com=commento['id_com'];
 
                             //controlliamo se il commento è dell'utente che lo sta guardando e inseriamo il delete button
                             const controllo = '<?php echo $_SESSION['username']; ?>';
 
                             if (controllo === username) {
-                                const id_com = commento['id_com'];
                                 var fai = true;
                                 const _lista = document.getElementById('list-comments');
                                 _lista.childNodes.forEach(li => {
@@ -386,7 +387,7 @@ $incdec = 1;
                                     if (last_row) {
                                         delete_btn = last_row.firstChild;
                                     }
-                                    if (delete_btn && id_com === delete_btn.getAttribute('id')) {
+                                    if (delete_btn && id_com === delete_btn.id) {
                                         fai = false;
                                         i += 1;
                                         //se il commento è stato creato non lo ricreo con show comments
@@ -394,6 +395,7 @@ $incdec = 1;
                                 });
                                 if (fai) {
                                     const box_commento = document.createElement("li");
+                                    box_commento.id="s"+id_com;
                                     box_commento.classList.add("container");
                                     box_commento.classList.add("commento-container");
                                     const img = document.createElement("img");
@@ -446,6 +448,7 @@ $incdec = 1;
                             else {
 
                                 const box_commento = document.createElement("li");
+                                box_commento.id="s"+id_com;
                                 box_commento.classList.add("container");
                                 box_commento.classList.add("commento-container");
                                 const img = document.createElement("img");
@@ -522,7 +525,28 @@ $incdec = 1;
     }
     });
   </script>
+  <script>
+   function searchComment(id_commento) {
+  // Cerca il commento corrispondente all'input fornito in $q
+  // ... Ottieni l'ID del commento corrispondente ...
+  // Funzione per cercare il commento e scorrere la pagina
+  function scrollToCommento() {// Esempio di valore dinamico
+    var selettore = "#" + "s" + id_commento;
+    var commento = $(selettore);
+    // Utilizza l'ID del commento per selezionare l'elemento corrispondente
+    // Scorrimento automatico fino al commento
+    if (commento.length > 0) {
+      // Verifica se il commento è stato trovato
+      $("html, body").animate({ scrollTop: commento.offset().top }, 1000); // Esegui lo scorrimento fino al commento con un'animazione di 1 secondo
+    } else {
+      // Se il commento non è stato ancora caricato, riprova dopo un certo intervallo di tempo (ad esempio 500 ms)
+      mostraAltri().then(()=>{scrollToCommento()});
+        }
+    }
+    scrollToCommento();// Avvia la funzione per cercare il commento e scorrere la pagina
+    }
 
+  </script>
 
 <script src='../js/like_follow.js'></script>
 </body>

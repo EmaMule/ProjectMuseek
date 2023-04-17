@@ -274,15 +274,15 @@ $indice_articoli = $_SESSION['indice-articoli'];
       <div class="d-flex row">
         <div class="col-md-12">
           <div id='tabellaAppend'>
-            <!--prime righe della tabella(max 3) -->
+            <!--prime righe (max 3) -->
             <?php
             $query_articles = 'SELECT * FROM articolo_con_username_e_media
-          WHERE email=$1 
-          order by id DESC 
-          offset 0
-          fetch first 9 rows only;';
-            $result_articles = pg_query_params($dbconn, $query_articles, array($_SESSION['email']));
-            $i = 0;
+            WHERE email=$1 
+            order by id DESC 
+            offset 0
+            fetch first 9 rows only;';
+              $result_articles = pg_query_params($dbconn, $query_articles, array($_SESSION['email']));
+              $i = 0;
 
             while ($line = pg_fetch_array($result_articles, null, PGSQL_ASSOC)) {
               $media = pg_unescape_bytea($line['contenuto']);
@@ -294,28 +294,34 @@ $indice_articoli = $_SESSION['indice-articoli'];
                 echo "<div class='row'>";
               }
               echo "<div class='col-lg-4 mt-3 align-middle'>
-                    <div class='card'>
-                      <div class='container container-fluid d-flex img-fluid'>
-                        <img class='card-img-top article_imgs img-fluid' 
-                            src='data:image/jpeg;charset=utf8;base64,$media'>
-                      </div>
-                      <div class='card-body'>
-                        <div class='container container-fluid container_testi'>
-                        <div class='row'>
-                        <a href='./post_view.php?article=$id'>
-                        <h5 class='card-title'>$titolo</h5>
-                        </a>
+                      <div class='card'>
+                        <div class='container container-fluid d-flex img-fluid'>
+                          <img class='card-img-top article_imgs img-fluid' 
+                              src='data:image/jpeg;charset=utf8;base64,$media'>
+                         </div>
+                          <div class='card-body'>
+                            <div class='container container-fluid container_testi'>
+                              <div class='row'>
+                                <a href='./post_view.php?article=$id'>
+                                  <h5 class='card-title'>$titolo</h5>
+                                </a>
+                              </div>
+                              <div class='row'>
+                                <p class='card-text'>$desc</p>
+                              </div>
+                            </div>
+                            <div class='row justify-content-end'>
+                              <span>$data</span>
+                            </div>
+                            <div class='row'>
+                              <ion-icon class='pallini' name='ellipsis-vertical' size='large' data-toggle='dropdown' id='drdwn'></ion-icon>
+                              <div class='dropdown-menu' aria-labelledby='drdwn'>
+                                <a class='dropdown-item delete-clickable' href='#' id='$id' >Delete</a>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class='row'>
-                        <p class='card-text'>$desc</p>
-                        </div>
-                        </div>
-                        <div class='row justify-content-end'>
-                          <span>$data</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>";
+                      </div>";
               if ($i == 2 || $i == 5 || $i == 8) {
                 echo "</div>";
               }
@@ -328,24 +334,26 @@ $indice_articoli = $_SESSION['indice-articoli'];
         </div>
       </div>
       <div class="container-fluid" id="loading-modal" style="display:none;">
-    <div class="modal-content">
-      <div class="spinner"></div>
+        <div class="modal-content">
+         <div class="spinner"></div>
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-</script>
+
   </body>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
   <script src="../js/metodi.js"></script>
   <script src="../js/urpp.js"></script>
   <script src="../js/urppArticles.js"></script>
+  <script src='../js/deleteArticles.js'></script>
   <script>
     const loadingModal = document.getElementById('loading-modal');
     window.addEventListener("scroll", () => {
