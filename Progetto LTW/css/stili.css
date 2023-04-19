@@ -1,0 +1,304 @@
+.my_nav-item .nav-link {
+  position: relative;
+  margin-left: 30px;
+  color: rgb(200, 200, 200) !important;
+}
+
+.my_nav-item .nav-link::before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  visibility: hidden;
+  transition: all 0.35s ease-in-out;
+}
+@media screen and (max-width: 920px) {
+  .my_nav-item .nav-link:hover::before {
+    visibility: visible;
+    width: 15%;
+  }
+}
+
+@media screen and (min-width: 921px) {
+  .my_nav-item .nav-link:hover::before {
+    visibility: visible;
+    width: 100%;
+  }
+}
+.my_brand {
+  font-family: sans-serif;
+}
+.navbar {
+  opacity: 0.9;
+}
+.icona_utente {
+  border-radius: 100%;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+  background-color: whitesmoke;
+  padding: 5px;
+  position: relative;
+  top: 0px;
+  vertical-align: middle;
+  display: inline-block;
+}
+.icona_utente:hover {
+  box-shadow: 0 0 7px 7px rgba(0, 0, 0, 0.3);
+}
+.my_para {
+  position: relative;
+  margin-top: 50px;
+}
+.form_popup {
+  position: fixed; /* attenzione a questa absolute, penso si possano avere problemi con reattività*/
+  top: -250px;
+  right: 9px;
+  overflow: hidden;
+  /*border: 3px solid #f1f1f1;*/
+  transition: opacity 0.2s, top 0.5s;
+  margin: 0;
+  z-index: 2;
+}
+.form_visible {
+  top: 65px;
+}
+.form-container {
+  /* cambiare colore*/
+  opacity: 0;
+  background-color: #fff;
+  max-width: 260px;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  top: -150px;
+  padding: 10px 25px 10px 25px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px px 0 rgba(0, 0, 0, 0.24);
+  transition: opacity 0.2s, top 0.5s;
+  backdrop-filter: blur(10px);
+  border-radius: 10%;
+}
+.form-container.visible {
+  opacity: 1;
+  top: 0px;
+}
+.form-container p {
+  font-size: 15px;
+  padding: 1px;
+  text-align: center;
+}
+.form-container input {
+  outline: 0;
+  border-radius: 10px;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form-container input:hover {
+  background-color: #d6d5d5; /* cambiare colore*/
+  color: white;
+  transition: all 0.3s ease 0s;
+}
+.form-container:focus {
+  background-color: aliceblue; /* cambiare colore*/
+  transition: all 1s ease 0s;
+}
+.form-container button {
+  text-transform: uppercase;
+  outline: 0;
+  border-radius: 10px;
+  background: #1adbe5; /*cambiare colore*/
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+.form-container button:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* sostituire il valore di "rgba" con il colore dell'ombra desiderato */
+}
+.form-container .messaggio {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.form-container .messaggio a {
+  color: #06c5cf;
+  text-decoration: none;
+}
+.search-bar {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  border-radius: 60px;
+}
+.search-bar input {
+  background: transparent;
+  font-size: 7px;
+  flex: 1;
+  border: 0;
+  outline: none;
+  font-size: 20px;
+  transition: width 0.5s;
+  caret-color: transparent;
+  padding-left: 15px;
+  color: #b3b3b3;
+}
+.search-bar button i {
+  width: 25px;
+}
+.search-bar button {
+  border: 0;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background: whitesmoke;
+  cursor: pointer;
+}
+.search-bar input::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 16px;
+  border-left: 1px solid black !important;
+  top: 5px;
+  right: 40px;
+}
+.my_h1 {
+  font-size: 23px;
+  color: black;
+}
+.header_page {
+  height: 10%;
+}
+.search-results {
+  position: fixed;
+  right: 80px;
+  top: -400px;
+  width: 450px;
+  margin: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  height: 400px;
+  overflow: auto;
+  scrollbar-color: #ccc transparent;
+  scrollbar-width: thin;
+}
+
+.search-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+#search_results #mioid {
+  list-style-type: none;
+}
+
+#search_results2 #tuoid {
+  list-style-type: none;
+}
+#search_results {
+  width: 100%;
+}
+#mioid {
+  width: 100%;
+  margin-top: 10px;
+}
+#search_results li {
+  background: transparent;
+  padding: 10px;
+  width: 95%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+  line-clamp: 4;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  margin-bottom: 3px;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-shadow: 1px 1px 0 #333, -1px -1px 0 #333, 1px -1px 0 #333,
+    -1px 1px 0 #333, 2px 2px 5px rgba(0, 0, 0, 0.65);
+  font-family: sans-serif;
+  font-family: 300;
+  backdrop-filter: blur(30px);
+}
+#search_results li a {
+  color: white;
+  text-decoration: none;
+}
+
+.img_searchbar {
+  width: 50px;
+  height: 50px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.titolo_searchbar {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 1125px) {
+  .search-results {
+    width: 350px;
+  }
+}
+@media only screen and (max-width: 1070px) {
+  .search-results {
+    width: 300px;
+  }
+}
+@media only screen and (max-width: 972px) {
+  .search-results {
+    width: 450px;
+  }
+}
+@media only screen and (max-width: 728px) {
+  .search-results {
+    width: 250px;
+  }
+}
+@media only screen and (max-width: 690px) {
+  .search-results {
+    width: 200px;
+  }
+  #search_results li {
+    width: 93%;
+  }
+}
+
+.navbar-collapse {
+  white-space: nowrap;
+}
+.immagine-profilo {
+  border-radius: 100%;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  margin-left: 20px;
+  padding: 5px;
+  position: relative;
+  top: 0px;
+  object-fit: cover;
+  vertical-align: middle;
+  display: inline-block;
+}
